@@ -1,12 +1,16 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import SearchContext from "../../context/SearchContext";
 import profileIcon from "../../images/profileIcon.svg";
 import searchIcon from "../../images/searchIcon.svg";
 
 export default function Header({ title }) {
-  const [searchVisible, setSearchVisible] = useState(false);
+  const { searchBar, setSearchBar } = useContext(SearchContext);
+
+  const history = useHistory();
 
   const handleInteractionSearch = () => {
-    setSearchVisible((prev) => !prev);
+    setSearchBar((prev) => !prev);
   };
 
   return (
@@ -16,7 +20,7 @@ export default function Header({ title }) {
       </h1>
       <div className="me-5 d-flex">
         <div className="d-flex" id="search-box">
-          {searchVisible && (
+          {searchBar && (
             <input
               type="text"
               className="form-control"
@@ -38,6 +42,7 @@ export default function Header({ title }) {
             src={profileIcon}
             alt="Profile Icon"
             data-testid="profile-top-btn"
+            onClick={() => history.push("/profile")}
           />
         </button>
       </div>
