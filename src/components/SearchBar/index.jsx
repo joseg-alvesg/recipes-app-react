@@ -1,15 +1,20 @@
 import React, { useContext } from "react";
 import SearchContext from "../../context/SearchContext";
-import { fetchMealRecipes } from "../../util/FetchFunctions";
+import { fetchRecipes } from "../../util/FetchFunctions";
 
-export default function SearchBar() {
-  const { searchText, setSearchText, filterType, setFilterType, setMealData } =
+export default function SearchBar({ title }) {
+  const { searchText, setSearchText, filterType, setFilterType, setDbData } =
     useContext(SearchContext);
 
   const handleSearch = async () => {
     if (!searchText) return;
-    const res = await fetchMealRecipes(filterType, searchText);
-    setMealData(res);
+    if (filterType === "first-letter" && searchText.length > 1) {
+      alert("Your search must have only 1 (one) character");
+      return;
+    }
+    const db = title === "Meals" ? "themealdb" : "thecocktaildb";
+    const res = await fetchRecipes(db, filterType, searchText);
+    setDbData(res.meals || res.drinks);
   };
 
   const handleChange = (e) => {

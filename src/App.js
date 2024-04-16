@@ -11,7 +11,7 @@ function App() {
       <BrowserRouter>
         <main
           className="h-100 w-100 justify-content-center
-        align-items-center d-flex flex-column"
+        align-items-center d-flex flex-column position-relative"
         >
           {/* <a href="https://www.flaticon.com/free-icons/recipe" title="recipe icons">Recipe icons created by Freepik - Flaticon</a> */}
           <Routes />

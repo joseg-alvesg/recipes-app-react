@@ -16,7 +16,7 @@ export default function Header({ title }) {
   };
 
   return (
-    <div className="fixed-top w-100 d-flex flex-column align-items-center justify-content-center">
+    <div className="position-fixed top-0 w-100 d-flex flex-column align-items-center justify-content-center">
       <div className="d-flex align-items-center">
         <img src="cooking.png" alt="Logo" style={{ width: "50px" }} />
         <button type="button" className="btn">
@@ -42,7 +42,7 @@ export default function Header({ title }) {
           {title}
         </h1>
       </div>
-      <div>{searchBar && <SearchBar />}</div>
+      <div>{searchBar && <SearchBar title={title} />}</div>
     </div>
   );
 }
