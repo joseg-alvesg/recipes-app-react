@@ -1,20 +1,20 @@
 import React from 'react';
 import './App.css';
-import rockGlass from './images/rockGlass.svg';
+import { BrowserRouter } from 'react-router-dom';
+import Routes from './routes';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
-    <div className="meals">
-      <span className="logo">TRYBE</span>
-      <object
-        className="rocksGlass"
-        type="image/svg+xml"
-        data={ rockGlass }
+    <BrowserRouter>
+      <main
+        className="h-100 w-100 justify-content-center
+        align-items-center d-flex flex-column"
       >
-        Glass
-      </object>
-    </div>
+        {/* <a href="https://www.flaticon.com/free-icons/recipe" title="recipe icons">Recipe icons created by Freepik - Flaticon</a> */}
+        <Routes />
+      </main>
+    </BrowserRouter>
   );
 }
 
