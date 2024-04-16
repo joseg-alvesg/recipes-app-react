@@ -1,7 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
 import { Form } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
+import validator from "validator";
+import { setUser } from "../../util/localStorageHelper";
 
 export default function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const history = useHistory();
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    if (name === "email") {
+      setEmail(value);
+    } else {
+      setPassword(value);
+    }
+  };
+
+  const validateEmail = (email) => {
+    return validator.isEmail(email);
+  };
+
+  const validatePassword = (password) => {
+    return password.length > 6;
+  };
+
+  const handleSubmit = () => {
+    setUser("email", email);
+    history.push("/meals");
+  };
+
   return (
     <div
       className="
@@ -26,6 +55,8 @@ export default function Login() {
               placeholder="jhon@gmail.com"
               data-testid="email-input"
               className="form-control"
+              onChange={(e) => handleChange(e)}
+              value={email}
             />
           </div>
           <div className="mb-3">
@@ -38,13 +69,18 @@ export default function Login() {
               data-testid="password-input"
               className="form-control"
               placeholder="********"
+              onChange={(e) => handleChange(e)}
+              value={password}
+              autoComplete="on"
             />
           </div>
 
           <button
-            type="submit"
+            type="button"
             data-testid="login-submit-btn"
             className="btn btn-primary btn-lg w-100"
+            disabled={!validateEmail(email) || !validatePassword(password)}
+            onClick={handleSubmit}
           >
             Login
           </button>
