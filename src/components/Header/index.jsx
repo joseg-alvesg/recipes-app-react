@@ -3,6 +3,8 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import SearchContext from "../../context/SearchContext";
 import profileIcon from "../../images/profileIcon.svg";
 import searchIcon from "../../images/searchIcon.svg";
+import mealIcon from "../../images/mealIcon.svg";
+import SearchBar from "../SearchBar";
 
 export default function Header({ title }) {
   const { searchBar, setSearchBar } = useContext(SearchContext);
@@ -14,29 +16,17 @@ export default function Header({ title }) {
   };
 
   return (
-    <div className="fixed-top w-100 d-flex justify-content-between align-items-center">
-      <h1 className="ms-5 fs-4 fw-bold m-0 p-0" data-testid="page-title">
-        {title}
-      </h1>
-      <div className="me-5 d-flex">
-        <div className="d-flex" id="search-box">
-          {searchBar && (
-            <input
-              type="text"
-              className="form-control"
-              data-testid="search-input"
-              id="search-input"
-            />
-          )}
-          <button type="button" className="btn">
-            <img
-              src={searchIcon}
-              alt="Search Icon"
-              data-testid="search-top-btn"
-              onClick={handleInteractionSearch}
-            />
-          </button>
-        </div>
+    <div className="fixed-top w-100 d-flex flex-column align-items-center justify-content-center">
+      <div className="d-flex align-items-center">
+        <img src="cooking.png" alt="Logo" style={{ width: "50px" }} />
+        <button type="button" className="btn">
+          <img
+            src={searchIcon}
+            alt="Search Icon"
+            data-testid="search-top-btn"
+            onClick={handleInteractionSearch}
+          />
+        </button>
         <button type="button" className="btn">
           <img
             src={profileIcon}
@@ -46,6 +36,13 @@ export default function Header({ title }) {
           />
         </button>
       </div>
+      <div className="d-flex flex-column align-items-center justify-content-center">
+        <img src={mealIcon} alt="Logo" className="w-25" />
+        <h1 className="ms-5 fs-4 fw-bold m-0 p-0" data-testid="page-title">
+          {title}
+        </h1>
+      </div>
+      <div>{searchBar && <SearchBar />}</div>
     </div>
   );
 }
