@@ -14,6 +14,10 @@ export default function SearchBar({ title }) {
     }
     const db = title === "Meals" ? "themealdb" : "thecocktaildb";
     const res = await fetchRecipes(db, filterType, searchText);
+    if (!res.meals && !res.drinks) {
+      alert("Sorry, we haven't found any recipes for these filters.");
+      return;
+    }
     setDbData(res.meals || res.drinks);
   };
 

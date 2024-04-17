@@ -5,6 +5,7 @@ import profileIcon from "../../images/profileIcon.svg";
 import searchIcon from "../../images/searchIcon.svg";
 import mealIcon from "../../images/mealIcon.svg";
 import SearchBar from "../SearchBar";
+import CategoryBar from "../CategoryBar";
 
 export default function Header({ title }) {
   const { searchBar, setSearchBar } = useContext(SearchContext);
@@ -43,6 +44,7 @@ export default function Header({ title }) {
         </h1>
       </div>
       <div>{searchBar && <SearchBar title={title} />}</div>
+      <div>{<CategoryBar />}</div>
     </div>
   );
 }
