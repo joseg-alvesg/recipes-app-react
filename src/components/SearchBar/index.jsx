@@ -1,24 +1,38 @@
 import React, { useContext } from "react";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import SearchContext from "../../context/SearchContext";
 import { fetchRecipes } from "../../util/FetchFunctions";
 
 export default function SearchBar({ title }) {
-  const { searchText, setSearchText, filterType, setFilterType, setDbData } =
-    useContext(SearchContext);
+  const {
+    searchText,
+    setSearchText,
+    filterType,
+    setFilterType,
+    setDbData,
+    searchRecipes,
+  } = useContext(SearchContext);
+  const history = useHistory();
 
   const handleSearch = async () => {
     if (!searchText) return;
-    if (filterType === "first-letter" && searchText.length > 1) {
+    if (filterType === "first-letter" && searchText.length !== 1) {
       alert("Your search must have only 1 (one) character");
       return;
     }
-    const db = title === "Meals" ? "themealdb" : "thecocktaildb";
-    const res = await fetchRecipes(db, filterType, searchText);
-    if (!res.meals && !res.drinks) {
+    const route = history.location.pathname;
+    const res = await searchRecipes(route, filterType, searchText);
+    console.log(res);
+    if (!res) {
+      console.log("no data");
       alert("Sorry, we haven't found any recipes for these filters.");
       return;
     }
-    setDbData(res.meals || res.drinks);
+    if (res && res.length === 1) {
+      const id = res[0].idMeal || data[0].idDrink;
+      history.push(`${route}/${id}`);
+      return;
+    }
   };
 
   const handleChange = (e) => {

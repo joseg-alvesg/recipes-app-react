@@ -10,8 +10,12 @@ export const fetchRecipes = async (db, type, content) => {
   return data;
 };
 
-export const fetchCategories = async (db, category = "list") => {
-  const url = `https://www.${db}.com/api/json/v1/1/list.php?c=${category}`;
+export const fetchCategories = async (
+  db,
+  filter = "list",
+  category = "list",
+) => {
+  const url = `https://www.${db}.com/api/json/v1/1/${filter}.php?c=${category}`;
   const response = await fetch(url);
   const data = await response.json();
   return data;
