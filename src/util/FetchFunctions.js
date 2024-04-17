@@ -20,3 +20,10 @@ export const fetchCategories = async (
   const data = await response.json();
   return data;
 };
+
+export const fetchDetails = async (db, id) => {
+  const url = `https://www.${db}.com/api/json/v1/1/lookup.php?i=${id}`;
+  const response = await fetch(url);
+  const data = await response.json();
+  return data;
+};

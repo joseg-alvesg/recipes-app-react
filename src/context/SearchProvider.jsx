@@ -2,14 +2,19 @@ import { useEffect, useState, useMemo } from "react";
 import PropTypes from "prop-types";
 import SearchContext from "./SearchContext";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import { fetchCategories, fetchRecipes } from "../util/FetchFunctions";
+import {
+  fetchCategories,
+  fetchDetails,
+  fetchRecipes,
+} from "../util/FetchFunctions";
 
 export default function SearchProvider({ children }) {
   const [searchBar, setSearchBar] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [filterType, setFilterType] = useState();
   const [dbData, setDbData] = useState([]);
-  // ("https://www.themealdb.com/api/json/v1/1/filter.php?i={ingrediente}");
+  const [recipeDetails, setRecipeDetails] = useState({});
+  const [recommendaions, setRecommendations] = useState([]);
 
   const searchRecipes = async (route, filterType = "name", content = "") => {
     const db = route === "/meals" ? "themealdb" : "thecocktaildb";
@@ -28,8 +33,21 @@ export default function SearchProvider({ children }) {
     const db = route === "/meals" ? "themealdb" : "thecocktaildb";
     const res = await fetchCategories(db, filter, category);
     const data = res.meals || res.drinks;
-    setDbData(data);
     return data;
+  };
+
+  const searchById = async (route, id) => {
+    const db = route === "meals" ? "themealdb" : "thecocktaildb";
+    const res = await fetchDetails(db, id);
+    const data = res.meals || res.drinks;
+    if (data[0].strYoutube) {
+      data[0].strYoutube = data[0].strYoutube.replace("watch?v=", "embed/");
+    } else if (data[0].strVideo) {
+      data[0].srtVideo = data[0].strVideo.replace("watch?v=", "embed/");
+    }
+    console.log("data[0]", data[0]);
+    setRecipeDetails(data[0]);
+    return data[0];
   };
 
   const value = useMemo(
@@ -44,6 +62,8 @@ export default function SearchProvider({ children }) {
       setDbData,
       searchRecipes,
       searchByCategory,
+      searchById,
+      recipeDetails,
     }),
     [
       searchBar,
@@ -56,6 +76,8 @@ export default function SearchProvider({ children }) {
       setDbData,
       searchRecipes,
       searchByCategory,
+      searchById,
+      recipeDetails,
     ],
   );
 

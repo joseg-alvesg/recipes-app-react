@@ -4,6 +4,7 @@ import Login from "../pages/Login";
 import Recipes from "../pages/Recipes";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import RecipeDetails from "../pages/RecipeDetails";
 
 export default function Routes() {
   return (
@@ -30,6 +31,8 @@ export default function Routes() {
           </>
         )}
       />
+      <Route exact path="/meals/:id" component={RecipeDetails} />
+      <Route exact path="/drinks/:id" component={RecipeDetails} />
     </Switch>
   );
 }
