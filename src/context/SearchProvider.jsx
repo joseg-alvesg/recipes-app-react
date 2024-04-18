@@ -14,7 +14,7 @@ export default function SearchProvider({ children }) {
   const [filterType, setFilterType] = useState();
   const [dbData, setDbData] = useState([]);
   const [recipeDetails, setRecipeDetails] = useState({});
-  const [recommendaions, setRecommendations] = useState([]);
+  const [recommendations, setRecommendations] = useState([]);
 
   const searchRecipes = async (route, filterType = "name", content = "") => {
     const db = route === "/meals" ? "themealdb" : "thecocktaildb";
@@ -50,6 +50,14 @@ export default function SearchProvider({ children }) {
     return data[0];
   };
 
+  const getRecommendations = async (route) => {
+    const db = route === "meals" ? "themealdb" : "thecocktaildb";
+    const res = await fetchRecipes(db, "name", "");
+    const data = res.meals || res.drinks;
+    setRecommendations(data);
+    return data;
+  };
+
   const value = useMemo(
     () => ({
       searchBar,
@@ -64,6 +72,9 @@ export default function SearchProvider({ children }) {
       searchByCategory,
       searchById,
       recipeDetails,
+      recommendations,
+      setRecommendations,
+      getRecommendations,
     }),
     [
       searchBar,
@@ -78,6 +89,9 @@ export default function SearchProvider({ children }) {
       searchByCategory,
       searchById,
       recipeDetails,
+      recommendations,
+      setRecommendations,
+      getRecommendations,
     ],
   );
 

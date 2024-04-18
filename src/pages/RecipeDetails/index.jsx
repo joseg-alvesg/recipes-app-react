@@ -3,10 +3,13 @@ import {
   useHistory,
   useParams,
 } from "react-router-dom/cjs/react-router-dom.min";
+import CarouselCard from "../../components/CarouselCard";
+import Carousel from "../../components/CarouselCard";
 import SearchContext from "../../context/SearchContext";
 
 export default function RecipeDetails() {
-  const { searchById, recipeDetails } = useContext(SearchContext);
+  const { searchById, recipeDetails, getRecommendations } =
+    useContext(SearchContext);
   const history = useHistory();
   const { id } = useParams();
 
@@ -17,6 +20,8 @@ export default function RecipeDetails() {
   const handleSearch = async () => {
     const route = history.location.pathname.split("/")[1];
     await searchById(route, id);
+    const recRoute = route === "meals" ? "drinks" : "meals";
+    await getRecommendations(recRoute);
   };
 
   const handleIngredients = () => {
@@ -64,6 +69,7 @@ export default function RecipeDetails() {
               title="Embedded youtube"
             />
           </div>
+          <CarouselCard />
         </div>
       )}
     </div>
