@@ -1,9 +1,9 @@
-import React from "react";
-import "./App.css";
-import { BrowserRouter } from "react-router-dom";
-import Routes from "./routes";
-import "bootstrap/dist/css/bootstrap.min.css";
-import SearchProvider from "./context/SearchProvider";
+import React from 'react';
+import './App.css';
+import { BrowserRouter } from 'react-router-dom';
+import Routes from './routes';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import SearchProvider from './context/SearchProvider';
 
 function App() {
   return (

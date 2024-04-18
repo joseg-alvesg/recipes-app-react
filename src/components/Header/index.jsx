@@ -1,11 +1,12 @@
-import React, { useContext } from "react";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import SearchContext from "../../context/SearchContext";
-import profileIcon from "../../images/profileIcon.svg";
-import searchIcon from "../../images/searchIcon.svg";
-import mealIcon from "../../images/mealIcon.svg";
-import SearchBar from "../SearchBar";
-import CategoryBar from "../CategoryBar";
+import React, { useContext } from 'react';
+import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import SearchContext from '../../context/SearchContext';
+import profileIcon from '../../images/profileIcon.svg';
+import searchIcon from '../../images/searchIcon.svg';
+import mealIcon from '../../images/mealIcon.svg';
+import SearchBar from '../SearchBar';
+import CategoryBar from '../CategoryBar';
 
 export default function Header({ title }) {
   const { searchBar, setSearchBar } = useContext(SearchContext);
@@ -17,34 +18,49 @@ export default function Header({ title }) {
   };
 
   return (
-    <div className="position-fixed top-0 w-100 d-flex flex-column align-items-center justify-content-center">
+    <div
+      className="position-fixed top-0 w-100 d-flex
+      flex-column align-items-center justify-content-center"
+    >
       <div className="d-flex align-items-center">
-        <img src="cooking.png" alt="Logo" style={{ width: "50px" }} />
-        <button type="button" className="btn">
+        <img src="cooking.png" alt="Logo" style={ { width: '50px' } } />
+        <button
+          type="button"
+          className="btn"
+          onClick={ handleInteractionSearch }
+        >
           <img
-            src={searchIcon}
-            alt="Search Icon"
             data-testid="search-top-btn"
-            onClick={handleInteractionSearch}
+            src={ searchIcon }
+            alt="Search Icon"
           />
         </button>
-        <button type="button" className="btn">
+        <button
+          type="button"
+          className="btn"
+          onClick={ () => history.push('/profile') }
+        >
           <img
-            src={profileIcon}
-            alt="Profile Icon"
             data-testid="profile-top-btn"
-            onClick={() => history.push("/profile")}
+            src={ profileIcon }
+            alt="Profile Icon"
           />
         </button>
       </div>
       <div className="d-flex flex-column align-items-center justify-content-center">
-        <img src={mealIcon} alt="Logo" className="w-25" />
+        <img src={ mealIcon } alt="Logo" className="w-25" />
         <h1 className="ms-5 fs-4 fw-bold m-0 p-0" data-testid="page-title">
           {title}
         </h1>
       </div>
-      <div>{searchBar && <SearchBar title={title} />}</div>
-      <div>{<CategoryBar />}</div>
+      <div>{searchBar && <SearchBar title={ title } />}</div>
+      <div>
+        <CategoryBar />
+      </div>
     </div>
   );
 }
+
+Header.propTypes = {
+  title: PropTypes.string.isRequired,
+};

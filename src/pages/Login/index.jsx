@@ -1,40 +1,38 @@
-import React, { useState } from "react";
-import { Form } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
-import validator from "validator";
-import { setUser } from "../../util/localStorageHelper";
+import React, { useState } from 'react';
+import { Form } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
+import validator from 'validator';
+import { setUser } from '../../util/localStorageHelper';
+
+const PASSWORD_LENGTH = 6;
 
 export default function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const history = useHistory();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (name === "email") {
+    if (name === 'email') {
       setEmail(value);
     } else {
       setPassword(value);
     }
   };
 
-  const validateEmail = (email) => {
-    return validator.isEmail(email);
-  };
+  const validateEmail = (_email) => validator.isEmail(_email);
 
-  const validatePassword = (password) => {
-    return password.length > 6;
-  };
+  const validatePassword = (_password) => _password.length > PASSWORD_LENGTH;
 
   const handleSubmit = () => {
-    setUser("email", email);
-    history.push("/meals");
+    setUser('email', email);
+    history.push('/meals');
   };
 
   return (
     <div
       className="
-      h-100 w-100 d-flex align-items-center 
+      h-100 w-100 d-flex align-items-center
       justify-content-center flex-column"
     >
       <div
@@ -55,8 +53,8 @@ export default function Login() {
               placeholder="jhon@gmail.com"
               data-testid="email-input"
               className="form-control"
-              onChange={(e) => handleChange(e)}
-              value={email}
+              onChange={ (e) => handleChange(e) }
+              value={ email }
             />
           </div>
           <div className="mb-3">
@@ -69,8 +67,8 @@ export default function Login() {
               data-testid="password-input"
               className="form-control"
               placeholder="********"
-              onChange={(e) => handleChange(e)}
-              value={password}
+              onChange={ (e) => handleChange(e) }
+              value={ password }
               autoComplete="on"
             />
           </div>
@@ -79,8 +77,8 @@ export default function Login() {
             type="button"
             data-testid="login-submit-btn"
             className="btn btn-primary btn-lg w-100"
-            disabled={!validateEmail(email) || !validatePassword(password)}
-            onClick={handleSubmit}
+            disabled={ !validateEmail(email) || !validatePassword(password) }
+            onClick={ handleSubmit }
           >
             Login
           </button>
