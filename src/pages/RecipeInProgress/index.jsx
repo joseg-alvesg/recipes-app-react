@@ -16,6 +16,7 @@ import {
 import blackHeartIcon from "../../images/blackHeartIcon.svg";
 import whiteHeartIcon from "../../images/whiteHeartIcon.svg";
 import { Button } from "react-bootstrap";
+import ShareButton from "../../components/ShareButton";
 
 export default function RecipeInProgress() {
   const [recipeDetails, ingredients] = useRecipeDetails();
@@ -146,11 +147,12 @@ export default function RecipeInProgress() {
         {recipeDetails.strMeal || recipeDetails.strDrink}
       </h1>
 
-      <button data-testid="share-btn" onClick={shareRecipe}>
-        {" "}
-        Compartilhar
-      </button>
-      {linkCopied && <span>Link copied!</span>}
+      {/* <button data-testid="share-btn" onClick={shareRecipe}> */}
+      {/*   {" "} */}
+      {/*   Compartilhar */}
+      {/* </button> */}
+      {/* {linkCopied && <span>Link copied!</span>} */}
+      <ShareButton dataTestid="share-btn" />
 
       <img
         data-testid="favorite-btn"
