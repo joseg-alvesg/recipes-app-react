@@ -9,6 +9,7 @@ import useRecipeDetails from "../../helpers/hooks/useRecipeDetails";
 import {
   getFavoriteRecipes,
   getInProgressRecipes,
+  saveDoneRecipes,
   saveFavoriteRecipes,
   saveInProgressRecipes,
 } from "../../util/localStorageHelper";
@@ -112,10 +113,26 @@ export default function RecipeInProgress() {
   }, [checkedIngredients]);
 
   useEffect(() => {
-    console.log(disableFinishRecipe());
-    console.log(checkedIngredients);
     setIsFinished(!disableFinishRecipe());
   }, [checkedIngredients]);
+
+  const finishRecipe = useCallback(() => {
+    const recipe = {
+      id: id,
+      type: history.location.pathname.split("/")[1].replace("s", ""),
+      nationality: recipeDetails.strArea || "",
+      category: recipeDetails?.strCategory || "",
+      alcoholicOrNot: recipeDetails.strAlcoholic || "",
+      name: recipeDetails.strMeal || recipeDetails.strDrink,
+      image: recipeDetails.strMealThumb || recipeDetails.strDrinkThumb,
+
+      doneDate: new Date(),
+      tags: recipeDetails.strTags ? recipeDetails.strTags.split(",") : [],
+    };
+
+    saveDoneRecipes(recipe);
+    history.push("/done-recipes");
+  }, [recipeDetails]);
 
   return (
     <div className=" w-100 h-100">
@@ -174,7 +191,11 @@ export default function RecipeInProgress() {
         </div>
       ))}
 
-      <button data-testid="finish-recipe-btn" disabled={!isFinished}>
+      <button
+        data-testid="finish-recipe-btn"
+        disabled={!isFinished}
+        onClick={finishRecipe}
+      >
         Finalizar Receita
       </button>
     </div>

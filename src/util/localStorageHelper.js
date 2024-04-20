@@ -3,22 +3,6 @@ export const setUser = (key, value) => {
   localStorage.setItem("user", valueToStore);
 };
 
-export const getDoneRecipes = () => {
-  const doneRecipes = JSON.parse(localStorage.getItem("doneRecipes"));
-  console.log("getDoneRecipes -> doneRecipes", doneRecipes);
-  return doneRecipes;
-};
-
-export const saveDoneRecipes = (key, value) => {
-  if (getDoneRecipes()) {
-    const doneRecipes = getDoneRecipes();
-    doneRecipes.push({ [key]: value });
-    localStorage.setItem("doneRecipes", JSON.stringify(doneRecipes));
-  } else {
-    localStorage.setItem("doneRecipes", JSON.stringify([{ [key]: value }]));
-  }
-};
-
 export const getInProgressRecipes = () => {
   const inProgressRecipes = JSON.parse(
     localStorage.getItem("inProgressRecipes"),
@@ -57,5 +41,21 @@ export const saveFavoriteRecipes = (value) => {
     localStorage.setItem("favoriteRecipes", JSON.stringify(favoriteRecipes));
   } else {
     localStorage.setItem("favoriteRecipes", JSON.stringify([{ ...value }]));
+  }
+};
+
+export const getDoneRecipes = () => {
+  const doneRecipes = JSON.parse(localStorage.getItem("doneRecipes"));
+  console.log("getDoneRecipes -> doneRecipes", doneRecipes);
+  return doneRecipes;
+};
+
+export const saveDoneRecipes = (value) => {
+  if (getDoneRecipes()) {
+    const doneRecipes = getDoneRecipes();
+    doneRecipes.push({ ...value });
+    localStorage.setItem("doneRecipes", JSON.stringify(doneRecipes));
+  } else {
+    localStorage.setItem("doneRecipes", JSON.stringify([{ ...value }]));
   }
 };
