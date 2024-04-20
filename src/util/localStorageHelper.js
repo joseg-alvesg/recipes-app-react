@@ -46,7 +46,6 @@ export const saveFavoriteRecipes = (value) => {
 
 export const getDoneRecipes = () => {
   const doneRecipes = JSON.parse(localStorage.getItem("doneRecipes"));
-  console.log("getDoneRecipes -> doneRecipes", doneRecipes);
   return doneRecipes;
 };
 
