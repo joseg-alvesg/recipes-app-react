@@ -18,16 +18,6 @@ export const saveDoneRecipes = (key, value) => {
     localStorage.setItem("doneRecipes", JSON.stringify([{ [key]: value }]));
   }
 };
-// {
-//     drinks: {
-//         id-da-bebida: [lista-de-ingredientes-utilizados],
-//         ...
-//     },
-//     meals: {
-//         id-da-comida: [lista-de-ingredientes-utilizados],
-//         ...
-//     }
-// }
 
 export const getInProgressRecipes = () => {
   const inProgressRecipes = JSON.parse(
@@ -52,5 +42,20 @@ export const saveInProgressRecipes = (route, key = "123", value = "123") => {
       "inProgressRecipes",
       JSON.stringify({ [route]: { [key]: value } }),
     );
+  }
+};
+
+export const getFavoriteRecipes = () => {
+  const favoriteRecipes = JSON.parse(localStorage.getItem("favoriteRecipes"));
+  return favoriteRecipes;
+};
+
+export const saveFavoriteRecipes = (value) => {
+  if (getFavoriteRecipes()) {
+    const favoriteRecipes = getFavoriteRecipes();
+    favoriteRecipes.push({ ...value });
+    localStorage.setItem("favoriteRecipes", JSON.stringify(favoriteRecipes));
+  } else {
+    localStorage.setItem("favoriteRecipes", JSON.stringify([{ ...value }]));
   }
 };
