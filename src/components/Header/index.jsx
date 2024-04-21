@@ -5,6 +5,7 @@ import SearchContext from "../../context/SearchContext";
 import profileIcon from "../../images/profileIcon.svg";
 import searchIcon from "../../images/searchIcon.svg";
 import mealIcon from "../../images/mealIcon.svg";
+import drinkIcon from "../../images/drinkIcon.svg";
 import SearchBar from "../SearchBar";
 import CategoryBar from "../CategoryBar";
 
@@ -24,9 +25,9 @@ export default function Header({ title }) {
     >
       <div className="d-flex align-items-center">
         <img src="cooking.png" alt="Logo" style={{ width: "50px" }} />
-        {window.location.pathname.includes("profile") ||
-        window.location.pathname.includes("done-recipes") ||
-        window.location.pathname.includes("favorite-recipes") ? null : (
+        {history.location.pathname.includes("profile") ||
+        history.location.pathname.includes("done-recipes") ||
+        history.location.pathname.includes("favorite-recipes") ? null : (
           <button
             type="button"
             className="btn"
@@ -52,15 +53,20 @@ export default function Header({ title }) {
         </button>
       </div>
       <div className="d-flex flex-column align-items-center justify-content-center">
-        <img src={mealIcon} alt="Logo" className="w-25" />
+        <img
+          src={title === "meals" ? mealIcon : drinkIcon}
+          alt="Logo"
+          className="w-25"
+          data-testid="page-icon"
+        />
         <h1 className="ms-5 fs-4 fw-bold m-0 p-0" data-testid="page-title">
           {title}
         </h1>
       </div>
       <div>{searchBar && <SearchBar title={title} />}</div>
-      {window.location.pathname.includes("profile") ||
-      window.location.pathname.includes("done-recipes") ||
-      window.location.pathname.includes("favorite-recipes") ? null : (
+      {history.location.pathname.includes("profile") ||
+      history.location.pathname.includes("done-recipes") ||
+      history.location.pathname.includes("favorite-recipes") ? null : (
         <CategoryBar />
       )}
     </div>
