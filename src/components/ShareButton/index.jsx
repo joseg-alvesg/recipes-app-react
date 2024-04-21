@@ -7,15 +7,6 @@ export default function ShareButton({ type, id, dataTestid }) {
 
   const shareRecipe = useCallback(() => {
     const route = window.location.href;
-    if (route.includes("in-progress")) {
-      const url = window.location.href.replace("/in-progress", "");
-      copu(url);
-      const TWO_SECONDS = 2000;
-      setLinkCopied(true);
-      setTimeout(() => {
-        setLinkCopied(false);
-      }, TWO_SECONDS);
-    }
     if (route.includes("done-recipes") || route.includes("favorite-recipes")) {
       console.log("shareRecipe", type, id);
       const url = route
@@ -28,6 +19,22 @@ export default function ShareButton({ type, id, dataTestid }) {
         setLinkCopied(false);
       }, TWO_SECONDS);
     }
+    if (route.includes("in-progress")) {
+      const url = window.location.href.replace("/in-progress", "");
+      copy(url);
+      const TWO_SECONDS = 2000;
+      setLinkCopied(true);
+      setTimeout(() => {
+        setLinkCopied(false);
+      }, TWO_SECONDS);
+    }
+    const url = window.location.href;
+    copy(url);
+    const TWO_SECONDS = 2000;
+    setLinkCopied(true);
+    setTimeout(() => {
+      setLinkCopied(false);
+    }, TWO_SECONDS);
   }, []);
   return (
     <div>

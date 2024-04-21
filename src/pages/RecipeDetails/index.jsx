@@ -5,24 +5,20 @@ import {
   useParams,
 } from "react-router-dom/cjs/react-router-dom.min";
 import CarouselCard from "../../components/CarouselCard";
-import SearchContext from "../../context/SearchContext";
-import useGetRecipes from "../../helpers/hooks/useGetRecipes";
+import FavoriteButton from "../../components/FavoriteButton";
+import ShareButton from "../../components/ShareButton";
 import useRecipeDetails from "../../helpers/hooks/useRecipeDetails";
 import {
   getDoneRecipes,
   getInProgressRecipes,
 } from "../../util/localStorageHelper";
 
-const INGREDIENTS = 20;
-
 export default function RecipeDetails() {
-  const { searchById, getRecommends, setIngredients } =
-    useContext(SearchContext);
   const [doneRecipe, setDoneRecipe] = useState(false);
   const history = useHistory();
   const { id } = useParams();
-  const [recipeDetails, ingredients] = useRecipeDetails();
   const [progress, setProgress] = useState(false);
+  const [recipeDetails, ingredients] = useRecipeDetails();
 
   const checkDoneRecipes = useCallback(() => {
     const map = new Map();
@@ -41,6 +37,7 @@ export default function RecipeDetails() {
 
   const checkInProgress = useCallback(() => {
     const inProgressRecipes = getInProgressRecipes();
+    if (!inProgressRecipes) return;
     const route = history.location.pathname.split("/")[1];
     const recipee = inProgressRecipes[route];
     if (recipee && recipee[id]) {
@@ -63,6 +60,8 @@ export default function RecipeDetails() {
             alt={recipeDetails.strMeal || recipeDetails.strDrink}
             className="img-fluid w-25 h-25"
           />
+          <ShareButton dataTestid="share-btn" />
+          <FavoriteButton id={id} recipeDetails={recipeDetails} />
           <h1 data-testid="recipe-title">
             {recipeDetails.strMeal || recipeDetails.strDrink}
           </h1>

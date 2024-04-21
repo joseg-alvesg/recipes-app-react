@@ -17,11 +17,11 @@ import {
 import blackHeartIcon from "../../images/blackHeartIcon.svg";
 import whiteHeartIcon from "../../images/whiteHeartIcon.svg";
 import ShareButton from "../../components/ShareButton";
+import FavoriteButton from "../../components/FavoriteButton";
 
 export default function RecipeInProgress() {
   const [recipeDetails, ingredients] = useRecipeDetails();
   const [checkedIngredients, setCheckedIngredients] = useState([]);
-  const [linkCopied, setLinkCopied] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
   const [isFinished, setIsFinished] = useState(false);
   const { id } = useParams();
@@ -61,41 +61,6 @@ export default function RecipeInProgress() {
     },
     [history, id],
   );
-
-  const saveFavorite = useCallback(() => {
-    const favoriteRecipes = getFavoriteRecipes();
-    const existingRecipe = favoriteRecipes?.find((recipe) => recipe.id === id);
-    if (existingRecipe) {
-      favoriteRecipes.splice(favoriteRecipes.indexOf(existingRecipe), 1);
-      localStorage.setItem("favoriteRecipes", JSON.stringify(favoriteRecipes));
-      setIsFavorite(false);
-    } else {
-      console.log(recipeDetails);
-      const recipe = {
-        id,
-        type: history.location.pathname.split("/")[1].replace("s", ""),
-        nationality: recipeDetails.strArea || "",
-        category: recipeDetails.strCategory || "",
-        alcoholicOrNot: recipeDetails.strAlcoholic || "",
-        name: recipeDetails.strMeal || recipeDetails.strDrink,
-        image: recipeDetails.strMealThumb || recipeDetails.strDrinkThumb,
-      };
-      saveFavoriteRecipes(recipe);
-      setIsFavorite(true);
-    }
-  }, [recipeDetails]);
-
-  const getFavoriteStatus = useCallback(() => {
-    const favoriteRecipes = getFavoriteRecipes();
-    const existingRecipe = favoriteRecipes?.find((recipe) => recipe.id === id);
-    if (existingRecipe) {
-      setIsFavorite(true);
-    }
-  }, []);
-
-  useEffect(() => {
-    getFavoriteStatus();
-  }, []);
 
   const disableFinishRecipe = useCallback(() => {
     const ingredientsArray = Object.values(checkedIngredients);
@@ -137,13 +102,7 @@ export default function RecipeInProgress() {
       </h1>
 
       <ShareButton dataTestid="share-btn" />
-
-      <img
-        data-testid="favorite-btn"
-        onClick={saveFavorite}
-        src={isFavorite ? blackHeartIcon : whiteHeartIcon}
-        className="btn"
-      />
+      <FavoriteButton id={id} recipeDetails={recipeDetails && recipeDetails} />
 
       <p data-testid="recipe-category">{recipeDetails.strCategory}</p>
 
