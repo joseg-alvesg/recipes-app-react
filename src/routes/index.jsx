@@ -1,49 +1,78 @@
-import React from 'react';
-import { Route, Switch } from 'react-router-dom';
-import Login from '../pages/Login';
-import Recipes from '../pages/Recipes';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
-import RecipeDetails from '../pages/RecipeDetails';
-import RecipeInProgress from '../pages/RecipeInProgress';
-import FavDoneRecipes from '../pages/FavDoneRecipes';
+import React from "react";
+import { Route, Switch } from "react-router-dom";
+import Login from "../pages/Login";
+import Recipes from "../pages/Recipes";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import RecipeDetails from "../pages/RecipeDetails";
+import RecipeInProgress from "../pages/RecipeInProgress";
+import FavDoneRecipes from "../pages/FavDoneRecipes";
+import Profile from "../pages/Profile";
 
 export default function Routes() {
   return (
     <Switch>
-      <Route exact path="/" component={ Login } />
+      <Route exact path="/" component={Login} />
       <Route
         exact
         path="/meals"
-        render={ () => (
+        render={() => (
           <>
             <Header title="Meals" />
             <Recipes />
             <Footer />
           </>
-        ) }
+        )}
       />
       <Route
         exact
         path="/drinks"
-        render={ () => (
+        render={() => (
           <>
             <Header title="Drinks" />
             <Recipes />
             <Footer />
           </>
-        ) }
+        )}
       />
-      <Route exact path="/meals/:id" component={ RecipeDetails } />
-      <Route exact path="/drinks/:id" component={ RecipeDetails } />
-      <Route exact path="/meals/:id/in-progress" component={ RecipeInProgress } />
+      <Route exact path="/meals/:id" component={RecipeDetails} />
+      <Route exact path="/drinks/:id" component={RecipeDetails} />
+      <Route exact path="/meals/:id/in-progress" component={RecipeInProgress} />
       <Route
         exact
         path="/drinks/:id/in-progress"
-        component={ RecipeInProgress }
+        component={RecipeInProgress}
       />
-      <Route exact path="/done-recipes" component={ FavDoneRecipes } />
-      <Route exact path="/favorite-recipes" component={ FavDoneRecipes } />
+      <Route
+        exact
+        path="/done-recipes"
+        render={() => (
+          <>
+            <Header title="Done Recipes" />
+            <FavDoneRecipes />
+          </>
+        )}
+      />
+      <Route
+        exact
+        path="/favorite-recipes"
+        render={() => (
+          <>
+            <Header title="Favorite Recipes" />
+            <FavDoneRecipes />
+          </>
+        )}
+      />
+      <Route
+        exactpath="/profile"
+        render={() => (
+          <>
+            <Header title="Profile" />
+            <Profile />
+            <Footer />
+          </>
+        )}
+      />
     </Switch>
   );
 }
