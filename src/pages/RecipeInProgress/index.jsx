@@ -36,7 +36,7 @@ export default function RecipeInProgress() {
     ) {
       setCheckedIngredients(getInProgressRecipes()[route][id]);
     } else {
-      console.log("aqui");
+      // console.log("aqui");
 
       const hasIngredients = ingredients.reduce((acc, ingredient) => {
         acc[ingredient] = false;

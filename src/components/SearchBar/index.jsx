@@ -25,7 +25,8 @@ export default function SearchBar() {
       return;
     }
     if (res && res.length === 1) {
-      history.push(`${route}/${res[0].idMeal || res[0].idDrink}`);
+      const id = res[0].idMeal || res[0].idDrink;
+      history.push(`${route}/${id}`);
     }
   };
 

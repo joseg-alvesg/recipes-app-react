@@ -8,7 +8,7 @@ export default function ShareButton({ type, id, dataTestid }) {
   const shareRecipe = useCallback(() => {
     const route = window.location.href;
     if (route.includes("done-recipes") || route.includes("favorite-recipes")) {
-      console.log("shareRecipe", type, id);
+      // console.log("shareRecipe", type, id);
       const url = route
         .replace("done-recipes", `${type}s/${id}`)
         .replace("favorite-recipes", `${type}s/${id}`);

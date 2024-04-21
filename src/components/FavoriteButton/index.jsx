@@ -14,7 +14,7 @@ export default function FavoriteButton({ id, recipeDetails }) {
   const saveFavorite = useCallback(() => {
     const favoriteRecipes = getFavoriteRecipes();
     const existingRecipe = favoriteRecipes?.find((recipe) => recipe.id === id);
-    console.log("saveFavorite", id, recipeDetails);
+    // console.log("saveFavorite", id, recipeDetails);
     if (existingRecipe) {
       favoriteRecipes.splice(favoriteRecipes.indexOf(existingRecipe), 1);
       localStorage.setItem("favoriteRecipes", JSON.stringify(favoriteRecipes));
