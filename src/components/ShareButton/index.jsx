@@ -6,7 +6,8 @@ export default function ShareButton({ type, id, dataTestid }) {
   const [linkCopied, setLinkCopied] = useState(false);
 
   const shareRecipe = useCallback(() => {
-    if (window.location.href.includes("in-progress")) {
+    const route = window.location.href;
+    if (route.includes("in-progress")) {
       const url = window.location.href.replace("/in-progress", "");
       copu(url);
       const TWO_SECONDS = 2000;
@@ -15,11 +16,11 @@ export default function ShareButton({ type, id, dataTestid }) {
         setLinkCopied(false);
       }, TWO_SECONDS);
     }
-    if (window.location.href.includes("done-recipes")) {
-      const url = window.location.href.replace(
-        "/done-recipes",
-        `/${type}s/${id}`,
-      );
+    if (route.includes("done-recipes") || route.includes("favorite-recipes")) {
+      console.log("shareRecipe", type, id);
+      const url = route
+        .replace("done-recipes", `${type}s/${id}`)
+        .replace("favorite-recipes", `${type}s/${id}`);
       copy(url);
       const TWO_SECONDS = 2000;
       setLinkCopied(true);
@@ -30,7 +31,12 @@ export default function ShareButton({ type, id, dataTestid }) {
   }, []);
   return (
     <div>
-      <img data-testid={dataTestid} onClick={shareRecipe} src={shareIcon} />
+      <img
+        data-testid={dataTestid}
+        onClick={shareRecipe}
+        src={shareIcon}
+        className="btn"
+      />
       {linkCopied && <span>Link copied!</span>}
     </div>
   );

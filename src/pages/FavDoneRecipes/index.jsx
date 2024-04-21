@@ -1,34 +1,32 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import { getDoneRecipes } from "../../util/localStorageHelper";
-import shareIcon from "../../images/shareIcon.svg";
-import ShareButton from "../../components/ShareButton";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import {
+  getDoneRecipes,
+  getFavoriteRecipes,
+} from "../../util/localStorageHelper";
+import ShareButton from "../../components/ShareButton";
+import FilterContext from "../../context/FilterProvider";
+import FavDoneFilters from "../../components/FavDoneFilters";
+import blackHeartIcon from "../../images/blackHeartIcon.svg";
 
 export default function DoneRecipes() {
-  const [doneRecipes, setDoneRecipes] = useState([]);
+  const { recipes, setRecipes } = useContext(FilterContext);
   const history = useHistory();
 
-  const getRecipes = useCallback(() => {
-    const recipes = getDoneRecipes();
-    setDoneRecipes(recipes);
-    console.log(recipes);
+  const getDone = useCallback(() => {
+    const storage = getDoneRecipes();
+    setRecipes(storage);
   }, []);
 
   useEffect(() => {
-    getRecipes();
-  }, []);
-
-  const filter = useCallback((type) => {
-    const recipes = getDoneRecipes();
-    if (type === "Meals") {
-      return setDoneRecipes(recipes.filter((recipe) => recipe.type === "meal"));
+    if (window.location.href.includes("done-recipes")) {
+      getDone();
     }
-    if (type === "Drinks") {
-      return setDoneRecipes(
-        recipes.filter((recipe) => recipe.type === "drink"),
-      );
+    if (window.location.href.includes("favorite-recipes")) {
+      const storage = getFavoriteRecipes();
+      console.log(storage);
+      setRecipes(storage);
     }
-    setDoneRecipes(recipes);
   }, []);
 
   const goToDetails = useCallback((type, id) => {
@@ -37,28 +35,19 @@ export default function DoneRecipes() {
     history.push(url);
   }, []);
 
+  const removeFavorite = useCallback((id) => {
+    const storage = getFavoriteRecipes();
+    const existingRecipe = storage.find((recipe) => recipe.id === id);
+    storage.splice(storage.indexOf(existingRecipe), 1);
+    localStorage.setItem("favoriteRecipes", JSON.stringify(storage));
+    setRecipes(storage);
+  }, []);
+
   return (
     <div>
-      <div>
-        <button data-testid="filter-by-all-btn" onClick={() => filter("All")}>
-          All
-        </button>
-        <button
-          data-testid="filter-by-meal-btn"
-          onClick={() => filter("Meals")}
-        >
-          Meals
-        </button>
-        <button
-          data-testid="filter-by-drink-btn"
-          onClick={() => filter("Drinks")}
-        >
-          Drinks
-        </button>
-      </div>
-
+      <FavDoneFilters />
       <div className="container d-flex">
-        {doneRecipes.map((recipe, index) => (
+        {recipes?.map((recipe, index) => (
           <div key={recipe.id + index}>
             <img
               src={recipe.image}
@@ -91,11 +80,20 @@ export default function DoneRecipes() {
               id={recipe.id}
               dataTestid={`${index}-horizontal-share-btn`}
             />
-            {recipe.tags.map((tag, i) => (
-              <p key={i} data-testid={`${index}-${tag}-horizontal-tag`}>
-                {tag}
-              </p>
-            ))}
+            {window.location.href.includes("favorite-recipes") && (
+              <img
+                src={blackHeartIcon}
+                alt="heart"
+                data-testid={`${index}-horizontal-favorite-btn`}
+                onClick={() => removeFavorite(recipe.id)}
+              />
+            )}
+            {recipe.tags &&
+              recipe.tags?.map((tag, i) => (
+                <p key={i} data-testid={`${index}-${tag}-horizontal-tag`}>
+                  {tag}
+                </p>
+              ))}
           </div>
         ))}
       </div>

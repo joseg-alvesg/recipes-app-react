@@ -5,6 +5,7 @@ import {
   useLocation,
   useParams,
 } from "react-router-dom/cjs/react-router-dom.min";
+import { Button } from "react-bootstrap";
 import useRecipeDetails from "../../helpers/hooks/useRecipeDetails";
 import {
   getFavoriteRecipes,
@@ -15,7 +16,6 @@ import {
 } from "../../util/localStorageHelper";
 import blackHeartIcon from "../../images/blackHeartIcon.svg";
 import whiteHeartIcon from "../../images/whiteHeartIcon.svg";
-import { Button } from "react-bootstrap";
 import ShareButton from "../../components/ShareButton";
 
 export default function RecipeInProgress() {
@@ -35,7 +35,6 @@ export default function RecipeInProgress() {
       getInProgressRecipes()[route][id]
     ) {
       setCheckedIngredients(getInProgressRecipes()[route][id]);
-      return;
     } else {
       console.log("aqui");
 
@@ -63,16 +62,6 @@ export default function RecipeInProgress() {
     [history, id],
   );
 
-  const shareRecipe = useCallback(() => {
-    const url = window.location.href.replace("/in-progress", "");
-    copy(url);
-    const TWO_SECONDS = 2000;
-    setLinkCopied(true);
-    setTimeout(() => {
-      setLinkCopied(false);
-    }, TWO_SECONDS);
-  }, []);
-
   const saveFavorite = useCallback(() => {
     const favoriteRecipes = getFavoriteRecipes();
     const existingRecipe = favoriteRecipes?.find((recipe) => recipe.id === id);
@@ -83,7 +72,7 @@ export default function RecipeInProgress() {
     } else {
       console.log(recipeDetails);
       const recipe = {
-        id: id,
+        id,
         type: history.location.pathname.split("/")[1].replace("s", ""),
         nationality: recipeDetails.strArea || "",
         category: recipeDetails.strCategory || "",
@@ -119,7 +108,7 @@ export default function RecipeInProgress() {
 
   const finishRecipe = useCallback(() => {
     const recipe = {
-      id: id,
+      id,
       type: history.location.pathname.split("/")[1].replace("s", ""),
       nationality: recipeDetails.strArea || "",
       category: recipeDetails?.strCategory || "",
@@ -147,11 +136,6 @@ export default function RecipeInProgress() {
         {recipeDetails.strMeal || recipeDetails.strDrink}
       </h1>
 
-      {/* <button data-testid="share-btn" onClick={shareRecipe}> */}
-      {/*   {" "} */}
-      {/*   Compartilhar */}
-      {/* </button> */}
-      {/* {linkCopied && <span>Link copied!</span>} */}
       <ShareButton dataTestid="share-btn" />
 
       <img
@@ -159,7 +143,7 @@ export default function RecipeInProgress() {
         onClick={saveFavorite}
         src={isFavorite ? blackHeartIcon : whiteHeartIcon}
         className="btn"
-      ></img>
+      />
 
       <p data-testid="recipe-category">{recipeDetails.strCategory}</p>
 
