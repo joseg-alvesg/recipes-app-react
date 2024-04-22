@@ -1,12 +1,14 @@
 import copy from "clipboard-copy";
 import React, { useCallback, useState } from "react";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import shareIcon from "../../images/shareIcon.svg";
 
 export default function ShareButton({ type, id, dataTestid }) {
   const [linkCopied, setLinkCopied] = useState(false);
+  const history = useHistory();
 
   const shareRecipe = useCallback(() => {
-    const route = window.location.href;
+    const route = history.location.pathname;
     if (route.includes("done-recipes") || route.includes("favorite-recipes")) {
       // console.log("shareRecipe", type, id);
       const url = route
@@ -20,7 +22,7 @@ export default function ShareButton({ type, id, dataTestid }) {
       }, TWO_SECONDS);
     }
     if (route.includes("in-progress")) {
-      const url = window.location.href.replace("/in-progress", "");
+      const url = history.location.pathname.replace("/in-progress", "");
       copy(url);
       const TWO_SECONDS = 2000;
       setLinkCopied(true);
@@ -28,7 +30,7 @@ export default function ShareButton({ type, id, dataTestid }) {
         setLinkCopied(false);
       }, TWO_SECONDS);
     }
-    const url = window.location.href;
+    const url = history.location.pathname;
     copy(url);
     const TWO_SECONDS = 2000;
     setLinkCopied(true);
