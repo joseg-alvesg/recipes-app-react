@@ -1,10 +1,10 @@
-import React from 'react';
-import './App.css';
-import { BrowserRouter } from 'react-router-dom';
-import Routes from './routes';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import SearchProvider from './context/SearchProvider';
-import FilterProvider from './context/FilterContext';
+import React from "react";
+import "./App.css";
+import { BrowserRouter } from "react-router-dom";
+import Routes from "./routes";
+import "bootstrap/dist/css/bootstrap.min.css";
+import SearchProvider from "./context/SearchProvider";
+import FilterProvider from "./context/FilterProvider";
 
 function App() {
   return (

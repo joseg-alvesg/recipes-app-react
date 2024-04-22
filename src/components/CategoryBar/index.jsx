@@ -30,7 +30,6 @@ export default function CategoryBar() {
         searchRecipes(route);
         return;
       }
-      // console.log('route', route);
       await searchByCategory(route, undefined, category);
       setSelectedCategory(category);
     },

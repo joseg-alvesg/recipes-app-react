@@ -1,0 +1,87 @@
+export const inProgressMock = {
+  meals: {
+    52771: {
+      "penne rigate - 1 pound": true,
+      "olive oil - 1/4 cup": true,
+      "garlic - 3 cloves": true,
+      "chopped tomatoes - 1 tin ": true,
+      "red chile flakes - 1/2 teaspoon": true,
+      "italian seasoning - 1/2 teaspoon": false,
+      "basil - 6 leaves": true,
+      "Parmigiano-Reggiano - spinkling": true,
+    },
+    52977: {
+      "Lentils - 1 cup ": true,
+      "Onion - 1 large": true,
+      "Carrots - 1 large": true,
+      "Tomato Puree - 1 tbs": true,
+      "Cumin - 2 tsp": true,
+      "Paprika - 1 tsp ": true,
+      "Mint - 1/2 tsp": true,
+      "Thyme - 1/2 tsp": true,
+      "Black Pepper - 1/4 tsp": true,
+      "Red Pepper Flakes - 1/4 tsp": true,
+      "Vegetable Stock - 4 cups ": true,
+      "Water - 1 cup ": true,
+      "Sea Salt - Pinch": true,
+    },
+    53026: {
+      "Broad Beans - 3 cups ": true,
+      "Spring Onions - 6": false,
+      "Garlic Clove - 4": false,
+      "Parsley - 1/4 cup": false,
+      "Cumin - 2 tsp": false,
+      "Baking Powder - 1 tsp ": false,
+      "Cayenne Pepper - 1/2 tsp": false,
+      "Flour - Spinkling": false,
+      "Vegetable Oil - As required": false,
+    },
+  },
+  drinks: {
+    17222: {
+      "Gin - 1 3/4 shot ": true,
+      "Grand Marnier - 1 Shot ": true,
+      "Lemon Juice - 1/4 Shot": true,
+      "Grenadine - 1/8 Shot": true,
+    },
+  },
+};
+
+export const inProgressMock2 = {
+  meals: {
+    52977: {
+      "Lentils - 1 cup ": true,
+      "Onion - 1 large": true,
+      "Carrots - 1 large": true,
+      "Tomato Puree - 1 tbs": true,
+      "Cumin - 2 tsp": true,
+      "Paprika - 1 tsp ": true,
+      "Mint - 1/2 tsp": true,
+      "Thyme - 1/2 tsp": true,
+      "Black Pepper - 1/4 tsp": true,
+      "Red Pepper Flakes - 1/4 tsp": true,
+      "Vegetable Stock - 4 cups ": true,
+      "Water - 1 cup ": true,
+      "Sea Salt - Pinch": true,
+    },
+    53026: {
+      "Broad Beans - 3 cups ": true,
+      "Spring Onions - 6": false,
+      "Garlic Clove - 4": false,
+      "Parsley - 1/4 cup": false,
+      "Cumin - 2 tsp": false,
+      "Baking Powder - 1 tsp ": false,
+      "Cayenne Pepper - 1/2 tsp": false,
+      "Flour - Spinkling": false,
+      "Vegetable Oil - As required": false,
+    },
+  },
+  drinks: {
+    17222: {
+      "Gin - 1 3/4 shot ": true,
+      "Grand Marnier - 1 Shot ": true,
+      "Lemon Juice - 1/4 Shot": true,
+      "Grenadine - 1/8 Shot": true,
+    },
+  },
+};

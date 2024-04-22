@@ -1,5 +1,21 @@
-import { createContext } from 'react';
+import { useMemo, useState } from "react";
+import FilterContext from "./FilterContext";
 
-const FilterContext = createContext();
+export default function FilterProvider({ children }) {
+  const [recipes, setRecipes] = useState([]);
+  const [filter, setFilter] = useState("All");
 
-export default FilterContext;
+  const value = useMemo(
+    () => ({
+      recipes,
+      setRecipes,
+      filter,
+      setFilter,
+    }),
+    [recipes, setRecipes, filter, setFilter],
+  );
+
+  return (
+    <FilterContext.Provider value={value}>{children}</FilterContext.Provider>
+  );
+}

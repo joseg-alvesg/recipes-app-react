@@ -4,11 +4,18 @@ import { Router } from "react-router-dom";
 import { render } from "@testing-library/react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import SearchProvider from "../../context/SearchProvider";
+import FilterProvider from "../../context/FilterProvider";
 
 function withRouter(component, history) {
   return (
     <Router history={history}>
-      <SearchProvider>{component}</SearchProvider>
+      <>
+        <SearchProvider>
+          <FilterProvider>
+            <div>{component}</div>
+          </FilterProvider>
+        </SearchProvider>
+      </>
     </Router>
   );
 }

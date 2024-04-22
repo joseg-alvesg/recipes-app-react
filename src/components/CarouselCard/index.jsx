@@ -23,7 +23,7 @@ export default function CarouselCard() {
       navigation
       spaceBetween={50}
       slidesPerView={2}
-      onSwiper={(swiper) => console.log(swiper)}
+      // onSwiper={(swiper) => console.log(swiper)}
       onSlideChange={() => console.log("slide change")}
     >
       {recipes.slice(0, MAX_CARDS).map((recommendation, i) => (

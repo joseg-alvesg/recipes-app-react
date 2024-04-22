@@ -15,6 +15,7 @@ export default function Profile() {
     localStorage.clear();
     history.push("/");
   };
+
   return (
     <div>
       <h1 data-testid="profile-email">Email:{user} </h1>

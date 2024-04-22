@@ -5,9 +5,9 @@ import {
   getFavoriteRecipes,
 } from "../../util/localStorageHelper";
 import ShareButton from "../../components/ShareButton";
-import FilterContext from "../../context/FilterProvider";
 import FavDoneFilters from "../../components/FavDoneFilters";
 import blackHeartIcon from "../../images/blackHeartIcon.svg";
+import FilterContext from "../../context/FilterContext";
 
 export default function DoneRecipes() {
   const { recipes, setRecipes } = useContext(FilterContext);
@@ -19,12 +19,11 @@ export default function DoneRecipes() {
   }, []);
 
   useEffect(() => {
-    if (window.location.href.includes("done-recipes")) {
+    if (history.location.pathname.includes("done-recipes")) {
       getDone();
     }
-    if (window.location.href.includes("favorite-recipes")) {
+    if (history.location.pathname.includes("favorite-recipes")) {
       const storage = getFavoriteRecipes();
-      console.log(storage);
       setRecipes(storage);
     }
   }, []);
@@ -80,7 +79,7 @@ export default function DoneRecipes() {
               id={recipe.id}
               dataTestid={`${index}-horizontal-share-btn`}
             />
-            {window.location.href.includes("favorite-recipes") && (
+            {history.location.pathname.includes("favorite-recipes") && (
               <img
                 src={blackHeartIcon}
                 alt="heart"
@@ -89,7 +88,7 @@ export default function DoneRecipes() {
               />
             )}
             {recipe.tags &&
-              recipe.tags?.map((tag, i) => (
+              recipe.tags.map((tag, i) => (
                 <p key={i} data-testid={`${index}-${tag}-horizontal-tag`}>
                   {tag}
                 </p>

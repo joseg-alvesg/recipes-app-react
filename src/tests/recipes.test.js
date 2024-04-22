@@ -2,11 +2,12 @@ import React from "react";
 import { renderWithRouter } from "./RenderWithRouter";
 import Recipes from "../pages/Recipes";
 import Header from "../components/Header";
-import { act, fireEvent, screen } from "@testing-library/react";
+import { act, screen } from "@testing-library/react";
 import SearchBar from "../components/SearchBar";
 import userEvent from "@testing-library/user-event";
 import { mealsMock } from "./mocks/meals";
 import { drinksMock } from "./mocks/drinksMock";
+import { categoryMock, drinkCategoryMock } from "./mocks/categoryMock";
 
 describe("Testando o componente Recipes", () => {
   describe("Testa renderização do /meals", () => {
@@ -126,6 +127,61 @@ describe("Testando o componente Recipes", () => {
 
       expect(screen.getByTestId("0-recipe-card")).toBeInTheDocument();
     });
+
+    it("Testa se os elementos de categoria são renderizados", async () => {
+      jest.spyOn(global, "fetch").mockResolvedValue({
+        json: jest.fn().mockResolvedValue({
+          meals: categoryMock,
+        }),
+      });
+      await act(async () => {
+        renderWithRouter(
+          <>
+            <Header title="meals" />
+          </>,
+          {
+            initialEntries: ["/meals"],
+          },
+        );
+      });
+
+      const category = screen.getByTestId("Beef-category-filter");
+
+      expect(category).toBeInTheDocument();
+    });
+
+    it("Testa se ao clicar em uma categoria é feito um fetch", async () => {
+      jest.spyOn(global, "fetch").mockResolvedValue({
+        json: jest.fn().mockResolvedValue({
+          meals: categoryMock,
+        }),
+      });
+      await act(async () => {
+        renderWithRouter(<Header title="meals" />, {
+          initialEntries: ["/meals"],
+        });
+      });
+      const category = screen.getByTestId("Beef-category-filter");
+      const all = screen.getByTestId("All-category-filter");
+      await act(async () => {
+        userEvent.click(category);
+      });
+      expect(fetch).toHaveBeenCalledTimes(2);
+      expect(fetch).toHaveBeenCalledWith(
+        "https://www.themealdb.com/api/json/v1/1/filter.php?c=Beef",
+      );
+
+      await act(async () => {
+        userEvent.click(category);
+      });
+      expect(fetch).toHaveBeenCalledTimes(3);
+
+      await act(async () => {
+        userEvent.click(all);
+      });
+
+      expect(fetch).toHaveBeenCalledTimes(4);
+    });
   });
 
   describe("Testa renderização do /drinks", () => {
@@ -217,6 +273,39 @@ describe("Testando o componente Recipes", () => {
       expect(history.push).toHaveBeenCalledTimes(2);
       expect(history.push).toHaveBeenCalledWith("/drinks/17222");
       expect(component.history.location.pathname).toBe("/drinks/17222");
+    });
+
+    it("Testa se ao clicar em uma categoria é feito um fetch", async () => {
+      jest.spyOn(global, "fetch").mockResolvedValue({
+        json: jest.fn().mockResolvedValue({
+          meals: drinkCategoryMock,
+        }),
+      });
+      await act(async () => {
+        renderWithRouter(<Header title="meals" />, {
+          initialEntries: ["/drinks"],
+        });
+      });
+      const category = screen.getByTestId("Ordinary Drink-category-filter");
+      const all = screen.getByTestId("All-category-filter");
+      await act(async () => {
+        userEvent.click(category);
+      });
+      expect(fetch).toHaveBeenCalledTimes(2);
+      expect(fetch).toHaveBeenCalledWith(
+        "https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Ordinary Drink",
+      );
+
+      await act(async () => {
+        userEvent.click(category);
+      });
+      expect(fetch).toHaveBeenCalledTimes(3);
+
+      await act(async () => {
+        userEvent.click(all);
+      });
+
+      expect(fetch).toHaveBeenCalledTimes(4);
     });
   });
 });
