@@ -81,7 +81,7 @@ export default function PaginationComponent({
   };
 
   return (
-    <Pagination>
+    <Pagination className="pt-2 fw-bold m-0 mb-1">
       <Pagination.First
         onClick={() => changePage(1)}
         disabled={currentPage === 1}

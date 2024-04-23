@@ -18,15 +18,13 @@ export default function Meals() {
 
   return (
     <div
-      className="container d-flex flex-column align-items-center
+      className="d-flex flex-column align-items-center
       overflow-hidden justify-content-center "
-      style={
-        searchBar
-          ? { marginTop: "190px", marginBottom: "63px" }
-          : { marginTop: "130px", marginBottom: "63px" }
-      }
     >
-      <div className="d-flex flex-wrap overflow-auto justify-content-center gap-3 scroll-custom">
+      <div
+        className="d-flex flex-wrap w-100 overflow-auto 
+        justify-content-center scroll-custom gap-3"
+      >
         {recipes &&
           recipes.slice(startIndex, endIndex).map((data, i) => (
             <div
@@ -49,7 +47,7 @@ export default function Meals() {
               tabIndex={0}
               key={data.idMeal || data.idDrink}
               className="col d-flex flex-column align-items-center
-                justify-content-center p-0  col-4 p-2 rounded col-sm-3"
+                justify-content-center p-1 col-4  rounded col-sm-3 col-md-3 col-lg-2 col-xl-2 col-xxl-2"
               data-testid={`${i}-recipe-card`}
             >
               <div className="card rounded p-0 bg-light w-100">

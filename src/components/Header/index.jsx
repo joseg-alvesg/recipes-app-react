@@ -20,46 +20,56 @@ export default function Header({ title }) {
 
   return (
     <div
-      className="position-fixed top-0 w-100 d-flex
+      className="w-100 d-flex
       flex-column align-items-center justify-content-center"
     >
-      <div className="d-flex align-items-center">
-        <img src="cooking.png" alt="Logo" style={{ width: "50px" }} />
-        {history.location.pathname.includes("profile") ||
-        history.location.pathname.includes("done-recipes") ||
-        history.location.pathname.includes("favorite-recipes") ? null : (
+      <div className="d-flex justify-content-between w-100 ps-5 pe-5 bg-dark">
+        <button className="btn" onClick={() => history.push("/meals")}>
+          <img
+            src="cooking.png"
+            alt="Logo"
+            style={{ width: "50px" }}
+            className="me-2"
+          />
+          <span className="fs-5 fw-bold">Recipes</span> App
+        </button>
+        <div>
+          {history.location.pathname.includes("profile") ||
+          history.location.pathname.includes("done-recipes") ||
+          history.location.pathname.includes("favorite-recipes") ? null : (
+            <button
+              type="button"
+              className="btn"
+              onClick={handleInteractionSearch}
+            >
+              <img
+                data-testid="search-top-btn"
+                src={searchIcon}
+                alt="Search Icon"
+              />
+            </button>
+          )}
           <button
             type="button"
             className="btn"
-            onClick={handleInteractionSearch}
+            onClick={() => history.push("/profile")}
           >
             <img
-              data-testid="search-top-btn"
-              src={searchIcon}
-              alt="Search Icon"
+              data-testid="profile-top-btn"
+              src={profileIcon}
+              alt="Profile Icon"
             />
           </button>
-        )}
-        <button
-          type="button"
-          className="btn"
-          onClick={() => history.push("/profile")}
-        >
-          <img
-            data-testid="profile-top-btn"
-            src={profileIcon}
-            alt="Profile Icon"
-          />
-        </button>
+        </div>
       </div>
-      <div className="d-flex flex-column align-items-center justify-content-center">
+      <div className="d-flex flex-column align-items-center justify-content-center pt-1">
         <img
-          src={title === "meals" ? mealIcon : drinkIcon}
-          alt="Logo"
-          className="w-25"
+          src={title === "Meals" ? mealIcon : drinkIcon}
+          alt="Title logo"
+          className="w-50"
           data-testid="page-icon"
         />
-        <h1 className="ms-5 fs-4 fw-bold m-0 p-0" data-testid="page-title">
+        <h1 className="fs-3 fw-bold m-0 p-0" data-testid="page-title">
           {title}
         </h1>
       </div>

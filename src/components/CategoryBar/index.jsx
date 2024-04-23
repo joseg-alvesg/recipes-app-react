@@ -1,31 +1,23 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import SearchContext from "../../context/SearchContext";
+import useCategories from "../../helpers/hooks/useCategories";
+import { categoriesIcons } from "../../images/categories/categories";
 import { fetchCategories } from "../../util/FetchFunctions";
+import CategoryCard from "../CategoryCard";
 
 const MAX_CATEGORIES = 5;
 
 export default function CategoryBar() {
-  const { dbData, searchRecipes, searchByCategory } = useContext(SearchContext);
-  const [categories, setCategories] = useState([]);
+  const { searchRecipes, searchByCategory } = useContext(SearchContext);
+  const categories = useCategories();
   const [selectedCatedory, setSelectedCategory] = useState("");
   const history = useHistory();
-
-  const categoriesLoad = useCallback(async () => {
-    const db =
-      history.location.pathname === "/meals" ? "themealdb" : "thecocktaildb";
-    const res = await fetchCategories(db);
-    setCategories(res.meals || res.drinks);
-  }, [history.location.pathname]);
-
-  useEffect(() => {
-    categoriesLoad();
-  }, [categoriesLoad]);
 
   const handleSearch = useCallback(
     async (category) => {
       const route = history.location.pathname;
-      if (selectedCatedory === category) {
+      if (selectedCatedory === category || category === "All") {
         setSelectedCategory("");
         searchRecipes(route);
         return;
@@ -42,25 +34,25 @@ export default function CategoryBar() {
   );
 
   return (
-    <div>
-      {categories &&
-        categories.slice(0, MAX_CATEGORIES).map((category) => (
-          <button
-            key={category.strCategory}
-            data-testid={`${category.strCategory}-category-filter`}
-            type="button"
-            onClick={() => handleSearch(category.strCategory)}
-          >
-            {category.strCategory}
-          </button>
-        ))}
-      <button
-        data-testid="All-category-filter"
-        type="button"
-        onClick={() => searchRecipes(history.location.pathname)}
-      >
-        All
-      </button>
+    <div className="d-flex justify-content-center w-100 overflow-auto scroll-custom">
+      <div className="d-flex w-100">
+        <CategoryCard
+          strCategory="All"
+          handleSearch={() => handleSearch("All")}
+          dataTestid="All-category-filter"
+          selected={selectedCatedory === ""}
+        />
+        {categories &&
+          categories.map((category) => (
+            <CategoryCard
+              key={category.strCategory}
+              strCategory={category.strCategory}
+              handleSearch={handleSearch}
+              dataTestid={`${category.strCategory}-category-filter`}
+              selected={selectedCatedory === category.strCategory}
+            />
+          ))}
+      </div>
     </div>
   );
 }

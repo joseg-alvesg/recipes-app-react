@@ -13,8 +13,8 @@ function App() {
       <FilterProvider>
         <BrowserRouter>
           <div
-            className="h-100 w-100 justify-content-center
-        align-items-center d-flex flex-column position-relative"
+            className="h-100 w-100 justify-content-between 
+        align-items-center d-flex flex-column"
           >
             <Routes />
           </div>
