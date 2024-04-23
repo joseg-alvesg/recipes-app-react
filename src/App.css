@@ -32,13 +32,12 @@
 .meals > .logo {
   animation: shake 1.5s infinite ease;
   color: aliceblue;
-  font-family: Montserrat , sans-serif;
+  font-family: Montserrat, sans-serif;
   font-size: 3em;
   font-weight: 900;
 }
 
 @keyframes shake {
-
   0% {
     transform: rotate(5deg);
   }
@@ -53,7 +52,6 @@
 }
 
 @keyframes clink {
-
   0% {
     transform: rotate(-10deg);
   }
@@ -65,4 +63,50 @@
   100% {
     transform: rotate(-10deg);
   }
+}
+
+@media (max-width: 768px) {
+  .fs-sm-1 {
+    font-size: 1em;
+  }
+}
+
+@media (max-width: 768px) {
+  .fs-sm-2 {
+    font-size: 1.5em;
+  }
+}
+
+@media (max-width: 768px) {
+  .fs-sm-3 {
+    font-size: 2em;
+  }
+}
+
+@media (max-width: 768px) {
+  .fs-sm-4 {
+    font-size: 3em;
+  }
+}
+
+@media (max-width: 768px) {
+  .fs-sm-5 {
+    font-size: 4em;
+  }
+}
+
+.scroll-custom {
+  overflow-y: auto; /* Habilitar rolagem vertical */
+}
+
+.scroll-custom::-webkit-scrollbar {
+  width: 5px;
+}
+
+.scroll-custom::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+.scroll-custom::-webkit-scrollbar-track {
+  background: #e0e0e0;
 }
