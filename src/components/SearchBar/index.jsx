@@ -1,7 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import SearchContext from "../../context/SearchContext";
-import useGetRecipes from "../../helpers/hooks/useGetRecipes";
 
 export default function SearchBar() {
   const {
@@ -31,59 +30,49 @@ export default function SearchBar() {
   };
 
   const handleChange = (e) => {
-    if (e.target.type === "radio") setFilterType(e.target.value);
+    if (e.target.name === "option") {
+      setFilterType(e.target.value);
+      setSearchText("");
+    }
     if (e.target.type === "text") setSearchText(e.target.value);
   };
   return (
-    <form className="">
-      <input
-        type="text"
-        className="form-control"
-        data-testid="search-input"
-        onChange={(e) => handleChange(e)}
-      />
-      <label className="form-label">
-        <input
-          type="radio"
-          name="ingredient"
-          value="ingredient"
-          data-testid="ingredient-search-radio"
-          onChange={(e) => handleChange(e)}
-          checked={filterType === "ingredient"}
-        />
-        ingredient
-      </label>
-
-      <label className="form-label">
-        <input
-          type="radio"
-          name="name"
-          value="name"
-          data-testid="name-search-radio"
-          onChange={(e) => handleChange(e)}
-          checked={filterType === "name"}
-        />
-        name
-      </label>
-      <label className="form-label">
-        <input
-          type="radio"
-          name="first-letter"
-          value="first-letter"
-          data-testid="first-letter-search-radio"
-          onChange={(e) => handleChange(e)}
-          checked={filterType === "first-letter"}
-        />
-        first letter
-      </label>
-      <button
+    <form
+      className="d-flex flex-column align-items-center w-75 indigo-light-bg rounded-3"
+      onKeyDown={(e) => {
+        e.key === "Enter" && e.preventDefault();
+        e.key === "Enter" && handleSearch();
+      }}
+    >
+      <div className="d-flex flex-column align-items-center w-100 form-group">
+        <div className="input-group">
+          <input
+            type="text"
+            className="form-control w-25"
+            data-testid="search-input"
+            onChange={(e) => handleChange(e)}
+            value={searchText}
+          />
+          <select
+            className="form-select"
+            name="option"
+            onChange={(e) => handleChange(e)}
+          >
+            <option value="name">name</option>
+            <option value="ingredient">ingredient</option>
+            <option value="first-letter">first letter</option>
+          </select>
+        </div>
+      </div>
+      <div className="mt-2 ms-1 me-1 fw-bold text-light"></div>
+      <h4
         type="button"
-        className="btn"
+        className="fs-5 mikado-yellow-bg rounder rounded-3 mt-1 p-2 w-50 text-center point"
         data-testid="exec-search-btn"
         onClick={handleSearch}
       >
-        Buscar
-      </button>
+        Search
+      </h4>
     </form>
   );
 }

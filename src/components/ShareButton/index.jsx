@@ -1,7 +1,7 @@
 import copy from "clipboard-copy";
 import React, { useCallback, useState } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import shareIcon from "../../images/shareIcon.svg";
+import { ReactComponent as ShareIcon } from "../../images/shareIcon.svg";
 
 export default function ShareButton({ type, id, dataTestid }) {
   const [linkCopied, setLinkCopied] = useState(false);
@@ -10,7 +10,6 @@ export default function ShareButton({ type, id, dataTestid }) {
   const shareRecipe = useCallback(() => {
     const route = history.location.pathname;
     if (route.includes("done-recipes") || route.includes("favorite-recipes")) {
-      // console.log("shareRecipe", type, id);
       const url = route
         .replace("done-recipes", `${type}s/${id}`)
         .replace("favorite-recipes", `${type}s/${id}`);
@@ -38,13 +37,17 @@ export default function ShareButton({ type, id, dataTestid }) {
       setLinkCopied(false);
     }, TWO_SECONDS);
   }, []);
+
+  const checkRoute =
+    history.location.pathname.includes("meals/") ||
+    history.location.pathname.includes("drinks/");
   return (
     <div>
-      <img
+      <ShareIcon
         data-testid={dataTestid}
         onClick={shareRecipe}
-        src={shareIcon}
-        className="btn"
+        className="point w-30-p h-30-p"
+        fill={checkRoute ? `#fdc500` : ""}
       />
       {linkCopied && <span>Link copied!</span>}
     </div>

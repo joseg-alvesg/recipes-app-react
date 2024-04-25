@@ -12,6 +12,9 @@ import {
   getDoneRecipes,
   getInProgressRecipes,
 } from "../../util/localStorageHelper";
+import { mealCategoriesIcons } from "../../images/mealCategories/categories";
+import { drinkCategoriesIcons } from "../../images/drinkCategories/categories";
+import CategoryCard from "../../components/CategoryCard";
 
 export default function RecipeDetails() {
   const [doneRecipe, setDoneRecipe] = useState(false);
@@ -51,23 +54,36 @@ export default function RecipeDetails() {
   }, [checkDoneRecipes, recipeDetails, checkInProgress]);
 
   return (
-    <div className="d-flex w-100 h-100">
+    <div className="d-flex w-100 align-items-center justify-content-center">
       {recipeDetails && (
-        <div className="container">
-          <img
-            data-testid="recipe-photo"
-            src={recipeDetails.strMealThumb || recipeDetails.strDrinkThumb}
-            alt={recipeDetails.strMeal || recipeDetails.strDrink}
-            className="img-fluid w-25 h-25"
-          />
-          <ShareButton dataTestid="share-btn" />
-          <FavoriteButton id={id} recipeDetails={recipeDetails} />
-          <h1 data-testid="recipe-title">
-            {recipeDetails.strMeal || recipeDetails.strDrink}
-          </h1>
-          <p data-testid="recipe-category">
-            {recipeDetails.strCategory} {recipeDetails.strAlcoholic}
-          </p>
+        <div className="w-100" style={{ maxWidth: "640px" }}>
+          <div className="card">
+            <img
+              data-testid="recipe-photo"
+              src={recipeDetails.strMealThumb || recipeDetails.strDrinkThumb}
+              alt={recipeDetails.strMeal || recipeDetails.strDrink}
+              className="card-img"
+            />
+            <div
+              className="card-img-overlay d-flex justify-content-end"
+              style={{ backgroundColor: "rgba(0, 0, 0, 0.3)" }}
+            >
+              <div>
+                <CategoryCard
+                  strCategory={recipeDetails.strCategory}
+                  strAlcoholic={recipeDetails.strAlcoholic}
+                  dataTestid="recipe-category"
+                />
+              </div>
+              <div className="align-self-center">
+                <h1 data-testid="recipe-title" className="mikado-yellow-color">
+                  {recipeDetails.strMeal || recipeDetails.strDrink}
+                </h1>
+              </div>
+              <ShareButton dataTestid="share-btn" />
+              <FavoriteButton id={id} recipeDetails={recipeDetails} />
+            </div>
+          </div>
           {ingredients &&
             ingredients.map((ingredient, index) => (
               <p

@@ -50,7 +50,7 @@ export default function Meals() {
                 justify-content-center p-1 col-4  rounded col-sm-3 col-md-3 col-lg-2 col-xl-2 col-xxl-2"
               data-testid={`${i}-recipe-card`}
             >
-              <div className="card rounded p-0 bg-light w-100">
+              <div className="card rounded p-0 body w-100">
                 <img
                   className="card-img-top"
                   src={data.strMealThumb || data.strDrinkThumb}

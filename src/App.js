@@ -14,7 +14,7 @@ function App() {
         <BrowserRouter>
           <div
             className="h-100 w-100 justify-content-between 
-        align-items-center d-flex flex-column"
+        align-items-center d-flex flex-column body"
           >
             <Routes />
           </div>

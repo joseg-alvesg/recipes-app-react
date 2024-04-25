@@ -3,8 +3,8 @@ import {
   getFavoriteRecipes,
   saveFavoriteRecipes,
 } from "../../util/localStorageHelper";
-import blackHeartIcon from "../../images/blackHeartIcon.svg";
-import whiteHeartIcon from "../../images/whiteHeartIcon.svg";
+import { ReactComponent as BlackHeartIcon } from "../../images/blackHeartIcon.svg";
+import { ReactComponent as WhiteHeartIcon } from "../../images/whiteHeartIcon.svg";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 export default function FavoriteButton({ id, recipeDetails }) {
@@ -42,12 +42,24 @@ export default function FavoriteButton({ id, recipeDetails }) {
   }, []);
 
   return (
-    <img
-      src={isFavorite ? blackHeartIcon : whiteHeartIcon}
-      alt="recipe"
-      onClick={saveFavorite}
-      data-testid="favorite-btn"
-      className="btn"
-    />
+    <>
+      {isFavorite ? (
+        <WhiteHeartIcon
+          alt="recipe"
+          onClick={saveFavorite}
+          data-testid="favorite-btn"
+          className="point w-30-p h-30-p ms-2"
+          fill="#fdc500"
+        />
+      ) : (
+        <BlackHeartIcon
+          alt="recipe"
+          onClick={saveFavorite}
+          data-testid="favorite-btn"
+          className="point w-30-p h-30-p ms-2"
+          fill="#fdc500"
+        />
+      )}
+    </>
   );
 }

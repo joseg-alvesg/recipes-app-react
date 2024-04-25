@@ -1,3 +1,9 @@
+:root {
+  --mikado-yellow: #fdc500;
+  --indigo-light: #5c0099;
+  --indigo-mid: #510087;
+  --indigo-dark: #3d0066;
+}
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -20,4 +26,41 @@ code {
   align-items: center;
 
   background-color: #f5f5f5;
+}
+
+.indigo-light-color {
+  color: var(--indigo-light);
+}
+.indigo-mid-color {
+  color: var(--indigo-mid);
+}
+.indigo-dark-color {
+  color: var(--indigo-dark);
+}
+.indigo-light-bg {
+  background-color: var(--indigo-light);
+}
+.indigo-mid-bg {
+  background-color: var(--indigo-mid);
+}
+.indigo-dark-bg {
+  background-color: var(--indigo-dark);
+}
+.mikado-yellow-color {
+  color: var(--mikado-yellow);
+}
+.mikado-yellow-bg {
+  background-color: var(--mikado-yellow);
+}
+
+.point {
+  cursor: pointer;
+}
+
+.w-30-p {
+  width: 30px;
+}
+
+.h-30-p {
+  height: 30px;
 }
