@@ -1,18 +1,19 @@
-import React, { useContext, useEffect } from "react";
-import SearchContext from "../../context/SearchContext";
+import React, { useContext, useEffect } from 'react';
+import SearchContext from '../../context/SearchContext';
 
+const TIMEOUT = 5000;
 export default function AlertCard() {
   const { alertCall, setAlertCall } = useContext(SearchContext);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setAlertCall({});
-    }, 5000);
+    }, TIMEOUT);
     return () => clearTimeout(timer);
   }, [alertCall, setAlertCall]);
 
   return (
-    <div className="fixed-top m-5" style={{ zIndex: "1000", left: "50%" }}>
+    <div className="fixed-top m-5" style={ { zIndex: '1000', left: '50%' } }>
       {alertCall.error && (
         <div className="alert alert-danger" role="alert">
           {alertCall.error}

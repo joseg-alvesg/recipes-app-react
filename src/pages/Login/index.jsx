@@ -49,7 +49,7 @@ export default function Login() {
       <div
         className="h-50 w-50 d-flex align-items-center flex-column
         justify-content-center border border-2 rounded-3 p-2 bg-light"
-        style={{ boxShadow: "-5px 5px 10px rgba(0, 0, 0, 0.3)" }}
+        style={ { boxShadow: '-5px 5px 10px rgba(0, 0, 0, 0.3)' } }
       >
         <div className="text-center">
           <img src="cooking.png" alt="logo" className="w-25 mt-3" />
