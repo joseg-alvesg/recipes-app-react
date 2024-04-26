@@ -11,7 +11,10 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  height: 100vh;
+  background-color: #f5f5f5;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 code {
@@ -20,12 +23,12 @@ code {
 }
 
 #root {
-  height: 100vh;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-
-  background-color: #f5f5f5;
+  flex: 1;
+  flex-direction: column;
 }
 
 .indigo-light-color {
@@ -63,4 +66,11 @@ code {
 
 .h-30-p {
   height: 30px;
+}
+
+.radius-button-yellow {
+  width: 55px;
+  height: 55px;
+  border: 2px solid #fdc500;
+  border-radius: 50%;
 }

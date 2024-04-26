@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import PropTypes from "prop-types";
+import React from "react";
 import { Pagination } from "react-bootstrap";
 
 const MAX_RECIPES = 12;
+const MAX_PAGES_SHOWN = 5;
 
 export default function PaginationComponent({
-  recipes,
-  currentPage,
+  recipes = [],
+  currentPage = 1,
   setCurrentPage,
 }) {
   const totalPages = Math.ceil(recipes.length / MAX_RECIPES);
@@ -28,7 +30,7 @@ export default function PaginationComponent({
       </Pagination.Item>,
     );
 
-    if (totalPages > 5) {
+    if (totalPages > MAX_PAGES_SHOWN) {
       const startRange = Math.max(2, currentPage - 1);
       const endRange = Math.min(totalPages - 1, currentPage + 1);
 
@@ -36,7 +38,7 @@ export default function PaginationComponent({
         items.push(<Pagination.Ellipsis key="start-ellipsis" />);
       }
 
-      for (let i = startRange; i <= endRange; i++) {
+      for (let i = startRange; i <= endRange; i += 1) {
         items.push(
           <Pagination.Item
             key={i}
@@ -52,7 +54,7 @@ export default function PaginationComponent({
         items.push(<Pagination.Ellipsis key="end-ellipsis" />);
       }
     } else {
-      for (let i = 2; i < totalPages; i++) {
+      for (let i = 2; i < totalPages; i += 1) {
         items.push(
           <Pagination.Item
             key={i}
@@ -102,3 +104,9 @@ export default function PaginationComponent({
     </Pagination>
   );
 }
+
+PaginationComponent.propTypes = {
+  recipes: PropTypes.arrayOf(PropTypes.shape({})),
+  currentPage: PropTypes.number,
+  setCurrentPage: PropTypes.func.isRequired,
+};

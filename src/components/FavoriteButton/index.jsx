@@ -1,13 +1,18 @@
+import PropTypes from "prop-types";
 import React, { useCallback, useEffect, useState } from "react";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import {
   getFavoriteRecipes,
   saveFavoriteRecipes,
 } from "../../util/localStorageHelper";
 import { ReactComponent as BlackHeartIcon } from "../../images/blackHeartIcon.svg";
 import { ReactComponent as WhiteHeartIcon } from "../../images/whiteHeartIcon.svg";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
-export default function FavoriteButton({ id, recipeDetails }) {
+export default function FavoriteButton({
+  id,
+  recipeDetails,
+  removeFavorite = null,
+}) {
   const [isFavorite, setIsFavorite] = useState(false);
   const history = useHistory();
 
@@ -31,7 +36,7 @@ export default function FavoriteButton({ id, recipeDetails }) {
       saveFavoriteRecipes(recipe);
       setIsFavorite(true);
     }
-  }, [recipeDetails]);
+  }, [recipeDetails, id, history.location.pathname]);
 
   useEffect(() => {
     const favoriteRecipes = getFavoriteRecipes();
@@ -39,27 +44,41 @@ export default function FavoriteButton({ id, recipeDetails }) {
     if (existingRecipe) {
       setIsFavorite(true);
     }
-  }, []);
+  }, [id]);
 
   return (
-    <>
-      {isFavorite ? (
+    <div className="p-3">
+      {!isFavorite ? (
         <WhiteHeartIcon
           alt="recipe"
-          onClick={saveFavorite}
+          onClick={() => saveFavorite()}
           data-testid="favorite-btn"
-          className="point w-30-p h-30-p ms-2"
+          className="point w-30-p h-30-p"
           fill="#fdc500"
         />
       ) : (
         <BlackHeartIcon
           alt="recipe"
-          onClick={saveFavorite}
+          onClick={() => removeFavorite(id)}
           data-testid="favorite-btn"
-          className="point w-30-p h-30-p ms-2"
+          className="point w-30-p h-30-p"
           fill="#fdc500"
         />
       )}
-    </>
+    </div>
   );
 }
+
+FavoriteButton.propTypes = {
+  id: PropTypes.string.isRequired,
+  recipeDetails: PropTypes.shape({
+    strArea: PropTypes.string,
+    strCategory: PropTypes.string,
+    strAlcoholic: PropTypes.string,
+    strMeal: PropTypes.string,
+    strDrink: PropTypes.string,
+    strMealThumb: PropTypes.string,
+    strDrinkThumb: PropTypes.string,
+  }).isRequired,
+  removeFavorite: PropTypes.func,
+};

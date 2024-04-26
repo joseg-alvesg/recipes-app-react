@@ -17,7 +17,6 @@ export const fetchCategories = async (
 ) => {
   const url = `https://www.${db}.com/api/json/v1/1/${filter}.php?c=${category}`;
   const response = await fetch(url);
-  console.log(response);
   const data = await response.json();
   return data;
 };

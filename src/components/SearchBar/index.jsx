@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import SearchContext from "../../context/SearchContext";
 
@@ -39,10 +39,7 @@ export default function SearchBar() {
   return (
     <form
       className="d-flex flex-column align-items-center w-75 indigo-light-bg rounded-3"
-      onKeyDown={(e) => {
-        e.key === "Enter" && e.preventDefault();
-        e.key === "Enter" && handleSearch();
-      }}
+      onSubmit={(e) => e.preventDefault()}
     >
       <div className="d-flex flex-column align-items-center w-100 form-group">
         <div className="input-group">
@@ -64,15 +61,16 @@ export default function SearchBar() {
           </select>
         </div>
       </div>
-      <div className="mt-2 ms-1 me-1 fw-bold text-light"></div>
-      <h4
+      <div className="mt-2 ms-1 me-1 fw-bold text-light" />
+      <button
         type="button"
-        className="fs-5 mikado-yellow-bg rounder rounded-3 mt-1 p-2 w-50 text-center point"
+        className="fs-5 mikado-yellow-bg rounder rounded-3 mt-1 p-2 w-50 text-center mb-2
+        point border-0"
         data-testid="exec-search-btn"
         onClick={handleSearch}
       >
         Search
-      </h4>
+      </button>
     </form>
   );
 }
