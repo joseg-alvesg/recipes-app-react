@@ -1,6 +1,6 @@
-import PropTypes from "prop-types";
-import React from "react";
-import { Pagination } from "react-bootstrap";
+import PropTypes from 'prop-types';
+import React from 'react';
+import { Pagination } from 'react-bootstrap';
 
 const MAX_RECIPES = 12;
 const MAX_PAGES_SHOWN = 5;
@@ -22,9 +22,9 @@ export default function PaginationComponent({
     const items = [];
     items.push(
       <Pagination.Item
-        key={1}
-        onClick={() => changePage(1)}
-        active={currentPage === 1}
+        key={ 1 }
+        onClick={ () => changePage(1) }
+        active={ currentPage === 1 }
       >
         1
       </Pagination.Item>,
@@ -41,9 +41,9 @@ export default function PaginationComponent({
       for (let i = startRange; i <= endRange; i += 1) {
         items.push(
           <Pagination.Item
-            key={i}
-            onClick={() => changePage(i)}
-            active={currentPage === i}
+            key={ i }
+            onClick={ () => changePage(i) }
+            active={ currentPage === i }
           >
             {i}
           </Pagination.Item>,
@@ -57,9 +57,9 @@ export default function PaginationComponent({
       for (let i = 2; i < totalPages; i += 1) {
         items.push(
           <Pagination.Item
-            key={i}
-            onClick={() => changePage(i)}
-            active={currentPage === i}
+            key={ i }
+            onClick={ () => changePage(i) }
+            active={ currentPage === i }
           >
             {i}
           </Pagination.Item>,
@@ -70,9 +70,9 @@ export default function PaginationComponent({
     if (totalPages > 1) {
       items.push(
         <Pagination.Item
-          key={totalPages}
-          onClick={() => changePage(totalPages)}
-          active={currentPage === totalPages}
+          key={ totalPages }
+          onClick={ () => changePage(totalPages) }
+          active={ currentPage === totalPages }
         >
           {totalPages}
         </Pagination.Item>,
@@ -85,21 +85,21 @@ export default function PaginationComponent({
   return (
     <Pagination className="pt-2 fw-bold m-0 mb-1">
       <Pagination.First
-        onClick={() => changePage(1)}
-        disabled={currentPage === 1}
+        onClick={ () => changePage(1) }
+        disabled={ currentPage === 1 }
       />
       <Pagination.Prev
-        onClick={() => changePage(currentPage - 1)}
-        disabled={currentPage === 1}
+        onClick={ () => changePage(currentPage - 1) }
+        disabled={ currentPage === 1 }
       />
       {createPaginationItems()}
       <Pagination.Next
-        onClick={() => changePage(currentPage + 1)}
-        disabled={currentPage >= totalPages}
+        onClick={ () => changePage(currentPage + 1) }
+        disabled={ currentPage >= totalPages }
       />
       <Pagination.Last
-        onClick={() => changePage(totalPages)}
-        disabled={currentPage >= totalPages}
+        onClick={ () => changePage(totalPages) }
+        disabled={ currentPage >= totalPages }
       />
     </Pagination>
   );

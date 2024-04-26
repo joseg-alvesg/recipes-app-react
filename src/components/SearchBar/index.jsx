@@ -1,6 +1,6 @@
-import React, { useContext } from "react";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import SearchContext from "../../context/SearchContext";
+import React, { useContext } from 'react';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import SearchContext from '../../context/SearchContext';
 
 export default function SearchBar() {
   const {
@@ -13,14 +13,14 @@ export default function SearchBar() {
   const history = useHistory();
 
   const handleSearch = async () => {
-    if (filterType === "first-letter" && searchText.length !== 1) {
-      global.alert("Your search must have only 1 (one) character");
+    if (filterType === 'first-letter' && searchText.length !== 1) {
+      global.alert('Your search must have only 1 (one) character');
       return;
     }
     const route = history.location.pathname;
     const res = await searchRecipes(route, filterType, searchText);
     if (!res) {
-      global.alert("Sorry, we haven't found any recipes for these filters.");
+      global.alert('Sorry, we haven\'t found any recipes for these filters.');
       return;
     }
     if (res && res.length === 1) {
@@ -30,16 +30,16 @@ export default function SearchBar() {
   };
 
   const handleChange = (e) => {
-    if (e.target.name === "option") {
+    if (e.target.name === 'option') {
       setFilterType(e.target.value);
-      setSearchText("");
+      setSearchText('');
     }
-    if (e.target.type === "text") setSearchText(e.target.value);
+    if (e.target.type === 'text') setSearchText(e.target.value);
   };
   return (
     <form
       className="d-flex flex-column align-items-center w-75 indigo-light-bg rounded-3"
-      onSubmit={(e) => e.preventDefault()}
+      onSubmit={ (e) => e.preventDefault() }
     >
       <div className="d-flex flex-column align-items-center w-100 form-group">
         <div className="input-group">
@@ -47,13 +47,13 @@ export default function SearchBar() {
             type="text"
             className="form-control w-25"
             data-testid="search-input"
-            onChange={(e) => handleChange(e)}
-            value={searchText}
+            onChange={ (e) => handleChange(e) }
+            value={ searchText }
           />
           <select
             className="form-select"
             name="option"
-            onChange={(e) => handleChange(e)}
+            onChange={ (e) => handleChange(e) }
           >
             <option value="name">name</option>
             <option value="ingredient">ingredient</option>
@@ -67,7 +67,7 @@ export default function SearchBar() {
         className="fs-5 mikado-yellow-bg rounder rounded-3 mt-1 p-2 w-50 text-center mb-2
         point border-0"
         data-testid="exec-search-btn"
-        onClick={handleSearch}
+        onClick={ handleSearch }
       >
         Search
       </button>

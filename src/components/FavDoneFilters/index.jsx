@@ -1,13 +1,13 @@
-import React, { useCallback, useContext } from "react";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import FilterContext from "../../context/FilterContext";
+import React, { useCallback, useContext } from 'react';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import FilterContext from '../../context/FilterContext';
 import {
   getDoneRecipes,
   getFavoriteRecipes,
-} from "../../util/localStorageHelper";
-import { ReactComponent as AllIcon } from "../../images/mealCategories/all.svg";
-import { ReactComponent as MealIcon } from "../../images/mealIcon.svg";
-import { ReactComponent as DrinkIcon } from "../../images/drinkIcon.svg";
+} from '../../util/localStorageHelper';
+import { ReactComponent as AllIcon } from '../../images/mealCategories/all.svg';
+import { ReactComponent as MealIcon } from '../../images/mealIcon.svg';
+import { ReactComponent as DrinkIcon } from '../../images/drinkIcon.svg';
 
 export default function FavDoneFilters() {
   const { setRecipes } = useContext(FilterContext);
@@ -15,17 +15,17 @@ export default function FavDoneFilters() {
   const filter = useCallback(
     (type) => {
       let storage = [];
-      if (history.location.pathname.includes("done-recipes")) {
+      if (history.location.pathname.includes('done-recipes')) {
         storage = getDoneRecipes();
       }
-      if (history.location.pathname.includes("favorite-recipes")) {
+      if (history.location.pathname.includes('favorite-recipes')) {
         storage = getFavoriteRecipes();
       }
-      if (type === "Meals") {
-        return setRecipes(storage.filter((recipe) => recipe.type === "meal"));
+      if (type === 'Meals') {
+        return setRecipes(storage.filter((recipe) => recipe.type === 'meal'));
       }
-      if (type === "Drinks") {
-        return setRecipes(storage.filter((recipe) => recipe.type === "drink"));
+      if (type === 'Drinks') {
+        return setRecipes(storage.filter((recipe) => recipe.type === 'drink'));
       }
       setRecipes(storage);
     },
@@ -36,7 +36,7 @@ export default function FavDoneFilters() {
     <div className="d-flex">
       <button
         className="btn d-flex flex-column align-items-center"
-        onClick={() => filter("All")}
+        onClick={ () => filter('All') }
         data-testid="filter-by-all-btn"
       >
         <div className="radius-button-yellow p-2">
@@ -52,7 +52,7 @@ export default function FavDoneFilters() {
       <button
         className="btn d-flex flex-column align-items-center"
         data-testid="filter-by-meal-btn"
-        onClick={() => filter("Meals")}
+        onClick={ () => filter('Meals') }
       >
         <div className="radius-button-yellow p-2">
           <MealIcon className="p-1 w-100 h-100" fill="#fdc500" />
@@ -67,7 +67,7 @@ export default function FavDoneFilters() {
       <button
         className="btn d-flex flex-column align-items-center"
         data-testid="filter-by-drink-btn"
-        onClick={() => filter("Drinks")}
+        onClick={ () => filter('Drinks') }
       >
         <div className="radius-button-yellow p-2">
           <DrinkIcon className="p-1 w-100 h-100" fill="#fdc500" />

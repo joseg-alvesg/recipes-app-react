@@ -1,14 +1,14 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   useHistory,
   useParams,
-} from "react-router-dom/cjs/react-router-dom.min";
-import useRecipeDetails from "../../helpers/hooks/useRecipeDetails";
+} from 'react-router-dom/cjs/react-router-dom.min';
+import useRecipeDetails from '../../helpers/hooks/useRecipeDetails';
 import {
   getDoneRecipes,
   getInProgressRecipes,
-} from "../../util/localStorageHelper";
-import DetailsCard from "../../components/DetailsCard";
+} from '../../util/localStorageHelper';
+import DetailsCard from '../../components/DetailsCard';
 
 export default function RecipeDetails() {
   const [doneRecipe, setDoneRecipe] = useState(false);
@@ -35,7 +35,7 @@ export default function RecipeDetails() {
   const checkInProgress = useCallback(() => {
     const inProgressRecipes = getInProgressRecipes();
     if (!inProgressRecipes) return;
-    const route = history.location.pathname.split("/")[1];
+    const route = history.location.pathname.split('/')[1];
     const recipee = inProgressRecipes[route];
     if (recipee && recipee[id]) {
       setProgress(true);
@@ -49,11 +49,11 @@ export default function RecipeDetails() {
 
   return (
     <DetailsCard
-      recipeDetails={recipeDetails}
-      ingredients={ingredients}
-      id={id}
-      doneRecipe={doneRecipe}
-      progress={progress}
+      recipeDetails={ recipeDetails }
+      ingredients={ ingredients }
+      id={ id }
+      doneRecipe={ doneRecipe }
+      progress={ progress }
     />
   );
 }

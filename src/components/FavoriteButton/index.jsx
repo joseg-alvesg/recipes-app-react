@@ -1,12 +1,12 @@
-import PropTypes from "prop-types";
-import React, { useCallback, useEffect, useState } from "react";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import PropTypes from 'prop-types';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import {
   getFavoriteRecipes,
   saveFavoriteRecipes,
-} from "../../util/localStorageHelper";
-import { ReactComponent as BlackHeartIcon } from "../../images/blackHeartIcon.svg";
-import { ReactComponent as WhiteHeartIcon } from "../../images/whiteHeartIcon.svg";
+} from '../../util/localStorageHelper';
+import { ReactComponent as BlackHeartIcon } from '../../images/blackHeartIcon.svg';
+import { ReactComponent as WhiteHeartIcon } from '../../images/whiteHeartIcon.svg';
 
 export default function FavoriteButton({
   id,
@@ -21,15 +21,15 @@ export default function FavoriteButton({
     const existingRecipe = favoriteRecipes?.find((recipe) => recipe.id === id);
     if (existingRecipe) {
       favoriteRecipes.splice(favoriteRecipes.indexOf(existingRecipe), 1);
-      localStorage.setItem("favoriteRecipes", JSON.stringify(favoriteRecipes));
+      localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
       setIsFavorite(false);
     } else {
       const recipe = {
         id,
-        type: history.location.pathname.split("/")[1].replace("s", ""),
-        nationality: recipeDetails.strArea || "",
-        category: recipeDetails.strCategory || "",
-        alcoholicOrNot: recipeDetails.strAlcoholic || "",
+        type: history.location.pathname.split('/')[1].replace('s', ''),
+        nationality: recipeDetails.strArea || '',
+        category: recipeDetails.strCategory || '',
+        alcoholicOrNot: recipeDetails.strAlcoholic || '',
         name: recipeDetails.strMeal || recipeDetails.strDrink,
         image: recipeDetails.strMealThumb || recipeDetails.strDrinkThumb,
       };
@@ -51,7 +51,7 @@ export default function FavoriteButton({
       {!isFavorite ? (
         <WhiteHeartIcon
           alt="recipe"
-          onClick={() => saveFavorite()}
+          onClick={ () => saveFavorite() }
           data-testid="favorite-btn"
           className="point w-30-p h-30-p"
           fill="#fdc500"
@@ -59,7 +59,7 @@ export default function FavoriteButton({
       ) : (
         <BlackHeartIcon
           alt="recipe"
-          onClick={() => removeFavorite(id)}
+          onClick={ () => removeFavorite(id) }
           data-testid="favorite-btn"
           className="point w-30-p h-30-p"
           fill="#fdc500"

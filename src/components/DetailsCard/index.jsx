@@ -1,10 +1,10 @@
-import PropTypes, { arrayOf } from "prop-types";
-import React, { useEffect } from "react";
-import { Link, useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import CarouselCard from "../CarouselCard";
-import CategoryCard from "../CategoryCard";
-import FavoriteButton from "../FavoriteButton";
-import ShareButton from "../ShareButton";
+import PropTypes from 'prop-types';
+import React from 'react';
+import { Link, useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import CarouselCard from '../CarouselCard';
+import CategoryCard from '../CategoryCard';
+import FavoriteButton from '../FavoriteButton';
+import ShareButton from '../ShareButton';
 
 export default function DetailsCard({
   recipeDetails = {},
@@ -18,9 +18,7 @@ export default function DetailsCard({
   finishRecipe = undefined,
 }) {
   const history = useHistory();
-  const checkInProgressRoute =
-    history.location.pathname.includes("in-progress");
-  useEffect(() => {}, [checkedIngredients]);
+  const checkInProgressRoute = history.location.pathname.includes('in-progress');
   return (
     <div className="d-flex w-100 align-items-center justify-content-center ">
       {recipeDetails && (
@@ -30,21 +28,21 @@ export default function DetailsCard({
         >
           <div
             className="card d-flex w-100 align-items-center"
-            style={{ maxWidth: "640px" }}
+            style={ { maxWidth: '640px' } }
           >
             <img
               data-testid="recipe-photo"
-              src={recipeDetails.strMealThumb || recipeDetails.strDrinkThumb}
-              alt={recipeDetails.strMeal || recipeDetails.strDrink}
+              src={ recipeDetails.strMealThumb || recipeDetails.strDrinkThumb }
+              alt={ recipeDetails.strMeal || recipeDetails.strDrink }
               className="card-img w-100"
             />
             <div
               className="card-img-overlay d-flex w-100 p-3 h-100 align-items-start"
-              style={{ backgroundColor: "rgba(0, 0, 0, 0.3)" }}
+              style={ { backgroundColor: 'rgba(0, 0, 0, 0.3)' } }
             >
               <CategoryCard
-                strCategory={recipeDetails.strCategory}
-                strAlcoholic={recipeDetails.strAlcoholic}
+                strCategory={ recipeDetails.strCategory }
+                strAlcoholic={ recipeDetails.strAlcoholic }
                 dataTestid="recipe-category"
                 className="d-flex flex-wrap"
               />
@@ -59,52 +57,50 @@ export default function DetailsCard({
             </div>
             <div className="card-img-overlay d-flex w-100 justify-content-end">
               <ShareButton dataTestid="share-btn" />
-              <FavoriteButton id={id} recipeDetails={recipeDetails} />
+              <FavoriteButton id={ id } recipeDetails={ recipeDetails } />
             </div>
           </div>
           <div className="container mt-3">
             <p className="fs-5 fw-bold">Ingredients</p>
             <ul className="list-group border p-3 mt-2">
-              {ingredients &&
-                ingredients.map((ingredient, index) =>
-                  checkInProgressRoute ? (
-                    <li
-                      key={index}
-                      data-testid={`${index}-ingredient-step`}
-                      className="list-group-item border-0"
+              {ingredients
+                && ingredients.map((ingredient, index) => (checkInProgressRoute ? (
+                  <li
+                    key={ index }
+                    data-testid={ `${index}-ingredient-step` }
+                    className="list-group-item border-0"
+                  >
+                    <button
+                      className="btn border-0"
+                      onClick={ () => toggleIngredient(ingredient) }
                     >
-                      <button
-                        className="btn border-0"
-                        onClick={() => toggleIngredient(ingredient)}
+                      <input
+                        type="checkbox"
+                        key={ index }
+                        data-testid={ `${index}-ingredient-step` }
+                        checked={ checkedIngredients[ingredient] || false }
+                        onChange={ () => {} }
+                      />
+                      <label
+                        className={
+                          checkedIngredients[ingredient]
+                            ? 'text-decoration-line-through text-muted ms-2'
+                            : 'ms-2'
+                        }
                       >
-                        <input
-                          type="checkbox"
-                          key={index}
-                          data-testid={`${index}-ingredient-step`}
-                          checked={checkedIngredients[ingredient] || false}
-                          onChange={() => {}}
-                        />
-                        <label
-                          className={
-                            checkedIngredients[ingredient]
-                              ? "text-decoration-line-through text-muted ms-2"
-                              : "ms-2"
-                          }
-                        >
-                          {ingredient}
-                        </label>
-                      </button>
-                    </li>
-                  ) : (
-                    <li
-                      key={index}
-                      data-testid={`${index}-ingredient-name-and-measure`}
-                      className="list-group-item border-0"
-                    >
-                      {ingredient}
-                    </li>
-                  ),
-                )}
+                        {ingredient}
+                      </label>
+                    </button>
+                  </li>
+                ) : (
+                  <li
+                    key={ index }
+                    data-testid={ `${index}-ingredient-name-and-measure` }
+                    className="list-group-item border-0"
+                  >
+                    {ingredient}
+                  </li>
+                )))}
             </ul>
           </div>
           <div className="container mt-3 w-100">
@@ -119,7 +115,7 @@ export default function DetailsCard({
                 <iframe
                   className="rounded"
                   data-testid="video"
-                  src={recipeDetails.strYoutube}
+                  src={ recipeDetails.strYoutube }
                   allow="accelerometer; clipboard-write;
               encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
@@ -130,11 +126,11 @@ export default function DetailsCard({
             {checkInProgressRoute && (
               <button
                 data-testid="finish-recipe-btn"
-                disabled={!isFinished}
-                onClick={finishRecipe}
-                className={`mikado-yellow-bg w-100 rounded-3 text-dark mt-5
+                disabled={ !isFinished }
+                onClick={ finishRecipe }
+                className={ `mikado-yellow-bg w-100 rounded-3 text-dark mt-5
                 p-2 fs-5 border-0
-                fw-bold ${!isFinished ? "disable" : "point"}`}
+                fw-bold ${!isFinished ? 'disable' : 'point'}` }
               >
                 Finalizar Receita
               </button>
@@ -149,10 +145,10 @@ export default function DetailsCard({
               data-testid="start-recipe-btn"
               className="position-fixed bottom-0 m-3 mikado-yellow-bg w-50 rounded-3
               text-center p-2 fs-5 text-decoration-none text-dark"
-              style={{ zIndex: 100 }}
-              to={`${history.location.pathname}/in-progress`}
+              style={ { zIndex: 100 } }
+              to={ `${history.location.pathname}/in-progress` }
             >
-              {progress ? "Continue Recipe" : "start recipe"}
+              {progress ? 'Continue Recipe' : 'start recipe'}
             </Link>
           )}
         </div>

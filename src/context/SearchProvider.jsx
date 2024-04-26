@@ -3,8 +3,6 @@ import { useCallback, useState, useMemo } from 'react';
 import SearchContext from './SearchContext';
 import {
   fetchCategories,
-  fetchDetails,
-  fetchRecipes,
 } from '../util/FetchFunctions';
 
 export default function SearchProvider({ children }) {
@@ -17,21 +15,6 @@ export default function SearchProvider({ children }) {
   const [recommendations, setRecommendations] = useState([]);
   const [ingredients, setIngredients] = useState([]);
 
-  const searchRecipes = useCallback(
-    async (route, filter = 'name', content = '') => {
-      const db = route === '/meals' ? 'themealdb' : 'thecocktaildb';
-      const res = await fetchRecipes(db, filter, content);
-      if (!res.meals && !res.drinks) {
-        global.alert('Sorry, we haven\'t found any recipes for these filters.');
-        return;
-      }
-      const data = res.meals || res.drinks;
-      setRecipes(data);
-      return data;
-    },
-    [],
-  );
-
   const searchByCategory = useCallback(
     async (route, filter = 'filter', category = '') => {
       const db = route === '/meals' ? 'themealdb' : 'thecocktaildb';
@@ -43,27 +26,6 @@ export default function SearchProvider({ children }) {
     [],
   );
 
-  const searchById = useCallback(async (route, id) => {
-    const db = route === 'meals' ? 'themealdb' : 'thecocktaildb';
-    const res = await fetchDetails(db, id);
-    const data = res.meals || res.drinks;
-    if (data[0].strYoutube) {
-      data[0].strYoutube = data[0].strYoutube.replace('watch?v=', 'embed/');
-    } else if (data[0].strVideo) {
-      data[0].srtVideo = data[0].strVideo.replace('watch?v=', 'embed/');
-    }
-    setRecipeDetails(data[0]);
-    return data[0];
-  }, []);
-
-  const getRecommends = useCallback(async (route) => {
-    const db = route === 'meals' ? 'themealdb' : 'thecocktaildb';
-    const res = await fetchRecipes(db, 'name', '');
-    const data = res.meals || res.drinks;
-    setRecommendations(data);
-    return data;
-  }, []);
-
   const value = useMemo(
     () => ({
       searchBar,
@@ -74,14 +36,11 @@ export default function SearchProvider({ children }) {
       setFilterType,
       dbData,
       setDbData,
-      searchRecipes,
       searchByCategory,
-      searchById,
       recipeDetails,
       setRecipeDetails,
       recommendations,
       setRecommendations,
-      getRecommends,
       ingredients,
       setIngredients,
       recipes,
@@ -96,14 +55,11 @@ export default function SearchProvider({ children }) {
       setFilterType,
       dbData,
       setDbData,
-      searchRecipes,
       searchByCategory,
-      searchById,
       recipeDetails,
       setRecipeDetails,
       recommendations,
       setRecommendations,
-      getRecommends,
       ingredients,
       setIngredients,
       recipes,

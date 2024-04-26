@@ -1,15 +1,15 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   useHistory,
   useParams,
-} from "react-router-dom/cjs/react-router-dom.min";
-import useRecipeDetails from "../../helpers/hooks/useRecipeDetails";
+} from 'react-router-dom/cjs/react-router-dom.min';
+import useRecipeDetails from '../../helpers/hooks/useRecipeDetails';
 import {
   getInProgressRecipes,
   saveDoneRecipes,
   saveInProgressRecipes,
-} from "../../util/localStorageHelper";
-import DetailsCard from "../../components/DetailsCard";
+} from '../../util/localStorageHelper';
+import DetailsCard from '../../components/DetailsCard';
 
 export default function RecipeInProgress() {
   const [recipeDetails, ingredients] = useRecipeDetails();
@@ -19,11 +19,11 @@ export default function RecipeInProgress() {
   const history = useHistory();
 
   useEffect(() => {
-    const route = history.location.pathname.split("/")[1];
+    const route = history.location.pathname.split('/')[1];
     if (
-      getInProgressRecipes() &&
-      getInProgressRecipes()[route] &&
-      getInProgressRecipes()[route][id]
+      getInProgressRecipes()
+      && getInProgressRecipes()[route]
+      && getInProgressRecipes()[route][id]
     ) {
       setCheckedIngredients(getInProgressRecipes()[route][id]);
     } else {
@@ -41,7 +41,7 @@ export default function RecipeInProgress() {
         const newCheckedIngredients = { ...prevCheckedIngredients };
         newCheckedIngredients[value] = !newCheckedIngredients[value];
         saveInProgressRecipes(
-          history.location.pathname.split("/")[1],
+          history.location.pathname.split('/')[1],
           id,
           newCheckedIngredients,
         );
@@ -63,30 +63,30 @@ export default function RecipeInProgress() {
   const finishRecipe = useCallback(() => {
     const recipe = {
       id,
-      type: history.location.pathname.split("/")[1].replace("s", ""),
-      nationality: recipeDetails.strArea || "",
-      category: recipeDetails?.strCategory || "",
-      alcoholicOrNot: recipeDetails.strAlcoholic || "",
+      type: history.location.pathname.split('/')[1].replace('s', ''),
+      nationality: recipeDetails.strArea || '',
+      category: recipeDetails?.strCategory || '',
+      alcoholicOrNot: recipeDetails.strAlcoholic || '',
       name: recipeDetails.strMeal || recipeDetails.strDrink,
       image: recipeDetails.strMealThumb || recipeDetails.strDrinkThumb,
 
       doneDate: new Date(),
-      tags: recipeDetails.strTags ? recipeDetails.strTags.split(",") : [],
+      tags: recipeDetails.strTags ? recipeDetails.strTags.split(',') : [],
     };
 
     saveDoneRecipes(recipe);
-    history.push("/done-recipes");
+    history.push('/done-recipes');
   }, [recipeDetails, history, id]);
 
   return (
     <DetailsCard
-      recipeDetails={recipeDetails}
-      ingredients={ingredients}
-      id={id}
-      toggleIngredient={toggleIngredient}
-      checkedIngredients={checkedIngredients}
-      isFinished={isFinished}
-      finishRecipe={finishRecipe}
+      recipeDetails={ recipeDetails }
+      ingredients={ ingredients }
+      id={ id }
+      toggleIngredient={ toggleIngredient }
+      checkedIngredients={ checkedIngredients }
+      isFinished={ isFinished }
+      finishRecipe={ finishRecipe }
     />
   );
 }
