@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { useCallback, useState, useMemo } from "react";
 import SearchContext from "./SearchContext";
-import { fetchCategories } from "../util/FetchFunctions";
+import { fetchCategories, fetchRecipes } from "../util/FetchFunctions";
 
 export default function SearchProvider({ children }) {
   const [searchBar, setSearchBar] = useState(false);
@@ -18,6 +18,20 @@ export default function SearchProvider({ children }) {
     notification: "",
   });
 
+  const searchRecipes = useCallback(
+    async (route, filter = "name", content = "") => {
+      const db = route === "/meals" ? "themealdb" : "thecocktaildb";
+      const res = await fetchRecipes(db, filter, content);
+      if (!res.meals && !res.drinks) {
+        global.alert("Sorry, we haven't found any recipes for these filters.");
+        return;
+      }
+      const data = res.meals || res.drinks;
+      setRecipes(data);
+      return data;
+    },
+    [],
+  );
   const searchByCategory = useCallback(
     async (route, filter = "filter", category = "") => {
       const db = route === "/meals" ? "themealdb" : "thecocktaildb";
@@ -50,6 +64,7 @@ export default function SearchProvider({ children }) {
       setRecipes,
       alertCall,
       setAlertCall,
+      searchRecipes,
     }),
     [
       searchBar,
@@ -71,6 +86,7 @@ export default function SearchProvider({ children }) {
       setRecipes,
       alertCall,
       setAlertCall,
+      searchRecipes,
     ],
   );
 

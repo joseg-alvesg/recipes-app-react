@@ -1,6 +1,5 @@
 import { useEffect, useContext, useCallback } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import AlertCard from "../../components/AlertCard";
 import SearchContext from "../../context/SearchContext";
 import { fetchRecipes } from "../../util/FetchFunctions";
 

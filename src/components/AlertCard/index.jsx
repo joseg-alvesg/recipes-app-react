@@ -3,7 +3,6 @@ import SearchContext from "../../context/SearchContext";
 
 export default function AlertCard() {
   const { alertCall, setAlertCall } = useContext(SearchContext);
-  const alerts = Object.entries(alertCall);
 
   useEffect(() => {
     const timer = setTimeout(() => {
