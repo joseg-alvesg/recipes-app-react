@@ -1,11 +1,13 @@
 import PropTypes from 'prop-types';
 import copy from 'clipboard-copy';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { ReactComponent as ShareIcon } from '../../images/shareIcon.svg';
+import AlertCard from '../AlertCard'
+import SearchContext from '../../context/SearchContext';
 
 export default function ShareButton({ type = '', id = '', dataTestid = '' }) {
-  const [linkCopied, setLinkCopied] = useState(false);
+  const { setAlertCall } = useContext(SearchContext);
   const history = useHistory();
 
   const shareRecipe = useCallback(() => {
@@ -15,28 +17,16 @@ export default function ShareButton({ type = '', id = '', dataTestid = '' }) {
         .replace('done-recipes', `${type}s/${id}`)
         .replace('favorite-recipes', `${type}s/${id}`);
       copy(url);
-      const TWO_SECONDS = 2000;
-      setLinkCopied(true);
-      setTimeout(() => {
-        setLinkCopied(false);
-      }, TWO_SECONDS);
+      return setAlertCall({success: 'Link copied!'});
     }
     if (route.includes('in-progress')) {
       const url = history.location.pathname.replace('/in-progress', '');
       copy(url);
-      const TWO_SECONDS = 2000;
-      setLinkCopied(true);
-      setTimeout(() => {
-        setLinkCopied(false);
-      }, TWO_SECONDS);
+      return setAlertCall({success: 'Link copied!'});
     }
     const url = history.location.pathname;
     copy(url);
-    const TWO_SECONDS = 2000;
-    setLinkCopied(true);
-    setTimeout(() => {
-      setLinkCopied(false);
-    }, TWO_SECONDS);
+    setAlertCall({success: 'Link copied!'});
   }, [history.location.pathname, id, type]);
 
   return (
@@ -47,7 +37,7 @@ export default function ShareButton({ type = '', id = '', dataTestid = '' }) {
         className="point w-30-p h-30-p"
         fill="#fdc500"
       />
-      {linkCopied && <span>Link copied!</span>}
+      <AlertCard />
     </div>
   );
 }
