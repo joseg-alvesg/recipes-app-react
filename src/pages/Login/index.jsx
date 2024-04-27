@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Form } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import validator from 'validator';
 import { setUser } from '../../util/localStorageHelper';
 import loginbg from '../../images/loginBg.jpg';
+import SearchContext from '../../context/SearchContext';
+import AlertCard from '../../components/AlertCard';
+import logo from '../../images/recipesLogo.svg';
 
 const PASSWORD_LENGTH = 6;
 
 export default function Login() {
+  const { setAlertCall } = useContext(SearchContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const history = useHistory();
@@ -20,6 +24,13 @@ export default function Login() {
       setPassword(value);
     }
   };
+
+  useEffect(() => {
+    setAlertCall({
+      notification:
+        'you can put any email and password to login, it\'s just a demo!',
+    });
+  }, [setAlertCall]);
 
   const validateEmail = (_email) => validator.isEmail(_email);
 
@@ -52,7 +63,7 @@ export default function Login() {
         style={ { boxShadow: '-5px 5px 10px rgba(0, 0, 0, 0.3)' } }
       >
         <div className="text-center">
-          <img src="cooking.png" alt="logo" className="w-25 mt-3" />
+          <img src={ logo } alt="logo" className="w-25 mt-3" />
         </div>
         <Form className="w-75">
           <div className="form-outline mb-3">
@@ -96,6 +107,7 @@ export default function Login() {
           </button>
         </Form>
       </div>
+      <AlertCard />
     </div>
   );
 }
