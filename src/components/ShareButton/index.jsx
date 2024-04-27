@@ -1,10 +1,12 @@
 import PropTypes from 'prop-types';
 import copy from 'clipboard-copy';
-import React, { useCallback, useContext, useState } from 'react';
+import React, { useCallback, useContext } from 'react';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { ReactComponent as ShareIcon } from '../../images/shareIcon.svg';
-import AlertCard from '../AlertCard'
+import AlertCard from '../AlertCard';
 import SearchContext from '../../context/SearchContext';
+
+const SUCCESS_CALL = { success: 'Link copied!' };
 
 export default function ShareButton({ type = '', id = '', dataTestid = '' }) {
   const { setAlertCall } = useContext(SearchContext);
@@ -17,17 +19,17 @@ export default function ShareButton({ type = '', id = '', dataTestid = '' }) {
         .replace('done-recipes', `${type}s/${id}`)
         .replace('favorite-recipes', `${type}s/${id}`);
       copy(url);
-      return setAlertCall({success: 'Link copied!'});
+      return setAlertCall(SUCCESS_CALL);
     }
     if (route.includes('in-progress')) {
       const url = history.location.pathname.replace('/in-progress', '');
       copy(url);
-      return setAlertCall({success: 'Link copied!'});
+      return setAlertCall(SUCCESS_CALL);
     }
     const url = history.location.pathname;
     copy(url);
-    setAlertCall({success: 'Link copied!'});
-  }, [history.location.pathname, id, type]);
+    setAlertCall(SUCCESS_CALL);
+  }, [history.location.pathname, id, type, setAlertCall]);
 
   return (
     <div className="p-3">
